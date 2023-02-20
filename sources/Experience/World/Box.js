@@ -20,6 +20,7 @@ export default class Box {
       new BoxGeometry(3, 3, 3),
       new MeshStandardMaterial({
         color: "red",
+        wireframe: true
       })
     );
     this.scene.add(this.box);
