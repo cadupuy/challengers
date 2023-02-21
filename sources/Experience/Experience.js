@@ -43,6 +43,7 @@ export default class Experience {
     this.setWorld();
 
     //this.IS_VOICE_MODE = false;
+    this.motionWrapper = document.querySelector('.motion-wrapper');
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -112,12 +113,13 @@ export default class Experience {
 
   startMotion(index) {
     let motion = motions[index-1];
-    const motionWrapper = document.querySelector('.motion-wrapper');
     if(motion != undefined) {
-      motionWrapper.classList.add('active');
+      this.motionWrapper.classList.add('active');
       for(let asset of motion.assets) {
-        motionWrapper.innerHTML += `<img class="layer" src="${asset}" role="presentation">` 
+        this.motionWrapper.innerHTML += `<img class="layer" src="${asset}" role="presentation">` 
       }
+    } else {
+      console.error('motion doesn\'t exist')
     }
   }
 
