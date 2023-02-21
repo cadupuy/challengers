@@ -20,10 +20,17 @@ export default class Box {
       new BoxGeometry(3, 3, 3),
       new MeshStandardMaterial({
         color: "red",
-        wireframe: true
+        wireframe: true,
       })
     );
     this.scene.add(this.box);
+
+    console.log(this.experience.$raycast);
+    this.experience.$raycast.add(this.box, {
+      onEnter: (a, b) => {
+        console.log(a, b);
+      },
+    });
 
     // Debug
     if (this.debug.active) {

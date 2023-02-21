@@ -11,6 +11,7 @@ import World from "@world/World.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
+import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
 
@@ -29,6 +30,7 @@ export default class Experience {
     this.canvas = _canvas;
 
     // Setup
+    this.setRaycaster();
     this.setDebug();
     this.setStats();
     this.setSizes();
@@ -48,6 +50,12 @@ export default class Experience {
     this.time.on("tick", () => {
       this.update();
     });
+
+    window.experience = this;
+  }
+
+  setRaycaster() {
+    raycastPlugin(this);
   }
 
   setDebug() {
@@ -96,6 +104,7 @@ export default class Experience {
     this.camera.update();
     this.world.update();
     this.renderer.update();
+    this.$raycast.update(this.camera.instance);
   }
 
   destroy() {
