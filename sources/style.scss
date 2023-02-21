@@ -19,18 +19,30 @@ body {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  display: none;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 1;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  transform: scale(1.25);
+  opacity: 0;
+  user-select: none;
   &.active {
-    display: block;
+    animation-name: motion-wrapper-appear;
   }
   .layer {
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: absolute;
+  }
+}
+
+@keyframes motion-wrapper-appear {
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }

@@ -11,7 +11,6 @@ import World from "@world/World.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
-import motions from "@experience/motions.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -112,7 +111,6 @@ export default class Experience {
   }
 
   startMotion(index) {
-    console.log(index)
     this.motionWrapper.classList.add('active');
   }
 
