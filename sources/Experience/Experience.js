@@ -11,6 +11,7 @@ import World from "@world/World.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
+import motions from "@experience/motions.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -40,6 +41,8 @@ export default class Experience {
     this.setCamera();
     this.setRenderer();
     this.setWorld();
+
+    //this.IS_VOICE_MODE = false;
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -105,6 +108,13 @@ export default class Experience {
     this.world.update();
     this.renderer.update();
     this.$raycast.update(this.camera.instance);
+  }
+
+  startMotion(index) {
+    let motion = motions[index-1];
+    if(motion != undefined) {
+      console.log(motion.audio)
+    }
   }
 
   destroy() {
