@@ -112,15 +112,8 @@ export default class Experience {
   }
 
   startMotion(index) {
-    let motion = motions[index-1];
-    if(motion != undefined) {
-      this.motionWrapper.classList.add('active');
-      for(let asset of motion.assets) {
-        this.motionWrapper.innerHTML += `<img class="layer" src="${asset}" role="presentation">` 
-      }
-    } else {
-      console.error('motion doesn\'t exist')
-    }
+    console.log(index)
+    this.motionWrapper.classList.add('active');
   }
 
   destroy() {
