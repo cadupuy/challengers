@@ -112,8 +112,12 @@ export default class Experience {
 
   startMotion(index) {
     let motion = motions[index-1];
+    const motionWrapper = document.querySelector('.motion-wrapper');
     if(motion != undefined) {
-      console.log(motion.audio)
+      motionWrapper.classList.add('active');
+      for(let asset of motion.assets) {
+        motionWrapper.innerHTML += `<img class="layer" src="${asset}" role="presentation">` 
+      }
     }
   }
 

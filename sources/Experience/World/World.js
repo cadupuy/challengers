@@ -10,8 +10,10 @@ export default class World {
 
     this.setEnvironment();
     this.setBox();
-
-    this.experience.startMotion(1);
+    
+    document.addEventListener('click', () => {
+      this.experience.startMotion(1);
+    })
 
   }
 
