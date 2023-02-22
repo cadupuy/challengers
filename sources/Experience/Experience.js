@@ -61,14 +61,25 @@ export default class Experience {
      */
     this.SCENE = 0;
     this.MOTION;
-    this.ID_AUDIO_PLAYING;
+    this.CURRENT_AUDIO;
+    this.AUDIO_IS_PLAYING = false;
+    this.AUDIO_VOLUME = 1;
 
-    //this.IS_VOICE_MODE = false;
-    this.motionWrapper = document.querySelector(".motion-wrapper");
+    this.audio;
 
-    this.audio1 = new Howl({
-      src: ["/audio/extrait-timothee.mp3"],
-    });
+    this.subtitlesElement = document.querySelector('.subtitles-wrapper');
+    this.motionWrapperElement = document.querySelector('.motion-wrapper');
+    this.soundElement = document.querySelector('.ui-elt.sound');
+    this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
+    this.vocalElement = document.querySelector('.ui-elt.vocal');
+
+    this.vocalElement.addEventListener('click', () => {
+      this.setupRecognition();
+    })
+
+    this.fullscreenElement.addEventListener('click', () => {
+      this.toggleFullScreen();
+    })
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -150,27 +161,145 @@ export default class Experience {
     this.$raycast.update(this.camera.instance);
   }
 
-  startMotion(index) {
-    // Show the motion
-    this.motionWrapper.classList.add("active");
-    this.ID_AUDIO_PLAYING = index;
-    this.startAudio();
+  setupRecognition() {
+
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+
+    let _currrentSubtitle;
+
+    recognition.addEventListener('result', e => {
+      
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+
+      _currrentSubtitle = transcript[0].toLowerCase();
+
+      //subtitles.innerHTML = transcript
+    })
+    
+    recognition.addEventListener('end', e => {
+
+      if(_currrentSubtitle.includes('plein écran')) {
+        this.toggleFullScreen();
+      }
+
+      if(_currrentSubtitle.includes('volume')) {
+        this.toggleAudioVolume();
+      }
+
+      if(_currrentSubtitle.includes('lancer')) {
+        this.startMotion();
+      }
+
+      recognition.start()
+
+    })
+
+    recognition.start()
+    
   }
 
-  startAudio() {
-    this.startSubtitles();
+  startMotion() {
+    this.motionWrapperElement.classList.add('active');
+    this.startAudio(2)
   }
 
-  getSubtitlesLength(subtitles) {
-    let length = 0;
-    for (let subtitle of subtitles) length += subtitle.time;
-    return length;
+  toggleFullScreen() {
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  
+  }
+
+  startAudio(index) { 
+    this.CURRENT_AUDIO = audios[index-1];
+    if(!this.AUDIO_IS_PLAYING) {
+      this.playAudio();
+      this.startSubtitles();
+    }
+  }
+
+  toggleAudioVolume() {
+
+    switch (this.AUDIO_VOLUME) {
+      case 1:
+        this.AUDIO_VOLUME = 0;
+        Howler.volume(0);
+        this.soundElement.querySelector('span').innerHTML = 0;
+        break;
+      case .5:
+        this.AUDIO_VOLUME = 1;
+        Howler.volume(1);
+        this.soundElement.querySelector('span').innerHTML = 100;
+        break;
+      case 0:
+        this.AUDIO_VOLUME = .5;
+        Howler.volume(.5);
+        this.soundElement.querySelector('span').innerHTML = 50;
+        break;
+      default:
+        console.log(`audio error`);
+    }
+    
+  }
+  
+  playAudio() {
+
+    this.AUDIO_IS_PLAYING = true;
+    this.audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
+    this.audio.play();
+
+    this.audio.on('end', function() {
+      this.AUDIO_IS_PLAYING = false;
+    });
+
+    this.soundElement.addEventListener('click', () => {
+      this.toggleAudioVolume();
+    });
+
+  }
+
+  resetSubtitles() {
+    this.subtitlesElement.innerHTML = '';
   }
 
   startSubtitles() {
-    if (audios[this.ID_AUDIO_PLAYING - 1] === undefined) return false;
-    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING - 1].subtitles);
-    console.log("Durée totale : " + dureeTotale);
+
+    let subtitlesLength = this.getSubtitlesLength();
+    let timecode = 0, timecodeMS = 0, current_subtitle;
+
+    const interval = setInterval(() => {
+
+      timecode++;
+      timecodeMS = timecode / 10;
+
+      current_subtitle = this.CURRENT_AUDIO.subtitles.filter((elt, i) => {
+        return this.CURRENT_AUDIO.subtitles[i+1]?.time > timecodeMS
+      })[0];
+
+      if(current_subtitle != undefined)
+        this.subtitlesElement.innerHTML = `<span>${current_subtitle.content}</span>`;
+
+      if(timecodeMS === subtitlesLength) {
+        clearInterval(interval);
+        setTimeout(() => {
+          this.resetSubtitles();
+        }, 1000);
+      }
+
+    }, 100)
+  }
+
+  getSubtitlesLength() {
+    let subtitles = this.CURRENT_AUDIO.subtitles;
+    return subtitles[subtitles.length-1].time;
   }
 
   destroy() {

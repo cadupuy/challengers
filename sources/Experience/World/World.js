@@ -14,10 +14,6 @@ export default class World {
       // Setup
       this.setEnvironment();
       this.setLocker();
-      
-      document.addEventListener('click', () => {
-        this.experience.startMotion(1);
-      })
 
     });
   }

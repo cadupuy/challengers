@@ -37,7 +37,7 @@ export default class Item {
 
     this.experience.$raycast.add(this.model, {
       onClick: () => {
-        console.log("click");
+        this.experience.startMotion()
       },
     });
 
