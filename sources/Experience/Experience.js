@@ -68,6 +68,11 @@ export default class Experience {
     this.motionWrapperElement = document.querySelector('.motion-wrapper');
     this.soundElement = document.querySelector('.ui-elt.sound');
     this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
+    this.vocalElement = document.querySelector('.ui-elt.vocal');
+
+    this.vocalElement.addEventListener('click', () => {
+      this.setupRecognition();
+    })
 
     this.fullscreenElement.addEventListener('click', () => {
       this.toggleFullScreen();
@@ -138,6 +143,48 @@ export default class Experience {
     this.world.update();
     this.renderer.update();
     this.$raycast.update(this.camera.instance);
+  }
+
+  setupRecognition() {
+
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+
+    let _currrentSubtitle;
+
+    recognition.addEventListener('result', e => {
+      
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+
+      _currrentSubtitle = transcript[0].toLowerCase();
+
+      //subtitles.innerHTML = transcript
+    })
+    
+    recognition.addEventListener('end', e => {
+
+      if(_currrentSubtitle.includes('plein écran')) {
+        this.toggleFullScreen();
+      }
+
+      if(_currrentSubtitle.includes('volume')) {
+        this.toggleAudioVolume();
+      }
+
+      if(_currrentSubtitle.includes('lancer')) {
+        this.startMotion();
+      }
+
+      recognition.start()
+
+    })
+
+    recognition.start()
+    
   }
 
   startMotion() {
