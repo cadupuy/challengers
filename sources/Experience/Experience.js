@@ -60,10 +60,11 @@ export default class Experience {
     this.MOTION;
     this.CURRENT_AUDIO;
     this.AUDIO_IS_PLAYING = false;
+    this.AUDIO_VOLUME = 1;
 
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
     this.motionWrapperElement = document.querySelector('.motion-wrapper');
-    this.pauseElement = document.querySelector('.ui-elt.pause');
+    this.soundElement = document.querySelector('.ui-elt.sound');
     this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
 
     this.fullscreenElement.addEventListener('click', () => {
@@ -170,8 +171,16 @@ export default class Experience {
       this.AUDIO_IS_PLAYING = false;
     });
 
-    this.pauseElement.addEventListener('click', () => {
-      audio.pause();
+    this.soundElement.addEventListener('click', () => {
+      if(this.AUDIO_VOLUME === 1) {
+        this.AUDIO_VOLUME = .1;
+        audio.volume(.1);
+        this.soundElement.querySelector('span').innerHTML = 10;
+      } else {
+        this.AUDIO_VOLUME = 1;
+        audio.volume(1);
+        this.soundElement.querySelector('span').innerHTML = 100;
+      }
     });
 
   }

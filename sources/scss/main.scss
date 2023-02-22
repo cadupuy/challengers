@@ -46,12 +46,16 @@ a {
     text-transform: uppercase;
     z-index: 1;
     cursor: pointer;
+    user-select: none;
     &:hover {
       background-color: #fff;
       color: #000;
     }
     &.left {
       left: 2em;
+    }
+    &.right {
+      right: 2em;
     }
     &.top {
       top: 2em;
