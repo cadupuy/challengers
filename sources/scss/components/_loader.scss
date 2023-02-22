@@ -1,0 +1,17 @@
+.loader {
+  z-index: 9;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__percent {
+    font-size: 40px;
+    color: var(--color-white);
+  }
+}
