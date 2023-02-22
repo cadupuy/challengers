@@ -168,17 +168,17 @@ export default class Experience {
     switch (this.AUDIO_VOLUME) {
       case 1:
         this.AUDIO_VOLUME = 0;
-        this.audio.volume(0);
+        Howler.volume(0);
         this.soundElement.querySelector('span').innerHTML = 0;
         break;
       case .5:
         this.AUDIO_VOLUME = 1;
-        this.audio.volume(1);
+        Howler.volume(1);
         this.soundElement.querySelector('span').innerHTML = 100;
         break;
       case 0:
         this.AUDIO_VOLUME = .5;
-        this.audio.volume(.5);
+        Howler.volume(.5);
         this.soundElement.querySelector('span').innerHTML = 50;
         break;
       default:
