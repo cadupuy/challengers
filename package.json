@@ -15,6 +15,7 @@
     "animejs": "^3.2.1",
     "gsap": "^3.11.3",
     "lil-gui": "^0.17.0",
+    "sass": "^1.58.3",
     "stats.js": "^0.17.0",
     "three": "^0.145.0",
     "vite-plugin-glsl": "^0.5.3"

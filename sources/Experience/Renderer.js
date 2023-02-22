@@ -36,7 +36,7 @@ export default class Renderer {
 
     this.instance.physicallyCorrectLights = true;
     this.instance.outputEncoding = sRGBEncoding;
-    this.instance.setClearColor("#101010", 1);
+    this.instance.setClearColor("#303030", 1);
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
 
