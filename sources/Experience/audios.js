@@ -1,5 +1,6 @@
 export default [
   {
+    id: 1,
     name: "audio-intro",
     path: "/audio/extrait-timothee.mp3",
     subtitles: [

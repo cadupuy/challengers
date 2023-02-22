@@ -53,17 +53,8 @@ export default class Experience {
      * 6 - Écran de fin
      */
     this.SCENE = 0;
-    
-    /**
-     * MOTION :
-     * 1 - Chaussure
-     * 2 - Micro
-     * 3 - Manette
-     * 4 - Lunette
-     * 5 - Airpods
-     * 6 - Lien
-     */
     this.MOTION;
+    this.ID_AUDIO_PLAYING;
 
     //this.IS_VOICE_MODE = false;
     this.motionWrapper = document.querySelector('.motion-wrapper');
@@ -139,20 +130,25 @@ export default class Experience {
   }
 
   startMotion(index) {
-    this.MOTION = index;
+    // Show the motion
     this.motionWrapper.classList.add('active');
+    this.ID_AUDIO_PLAYING = index;
+    this.startAudio()
   }
 
   startAudio() {
-    this.audio1.play();
-    this.startSubtitles(1);
+    this.startSubtitles();
   }
 
-  startSubtitles(index) {
-    if(audios[index-1] === undefined) return false;
-    // Get the total length of all the subtitles
-    let dureeTotale = 0;
-    for(let subtitle of audios[index-1].subtitles) dureeTotale += subtitle.time;
+  getSubtitlesLength(subtitles) {
+    let length = 0;
+    for(let subtitle of subtitles) length += subtitle.time;
+    return length;
+  }
+
+  startSubtitles() {
+    if(audios[this.ID_AUDIO_PLAYING-1] === undefined) return false;
+    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING-1].subtitles);
     console.log('Durée totale : ' + dureeTotale);
   }
 
