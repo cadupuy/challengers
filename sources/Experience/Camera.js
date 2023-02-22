@@ -22,7 +22,6 @@ export default class Camera {
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 1, 500);
     this.instance.position.set(0, 0, -10);
-    this.instance.lookAt(0, 0, 0);
     this.scene.add(this.instance);
 
     if (this.debug.active) {

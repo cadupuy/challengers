@@ -10,14 +10,34 @@ export default class Loader {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+    this.debug = this.experience.debug;
+
+    this.params = {
+      active: true,
+    };
 
     this.loaderDiv = document.querySelector(".loader");
+    this.percent = document.querySelector(".loader__percent");
 
-    this.resources.on("ready", () => {
-      this.animations();
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("loader");
+      this.debugFolder.add(this.params, "active");
+    }
+
+    if (this.params.active) {
+      this.setEvents();
+      this.init();
+    }
+  }
+
+  setEvents() {
+    this.resources.on("percent", (percent) => {
+      this.percent.innerHTML = `${percent}%`;
     });
 
-    this.init();
+    this.resources.on("ready", () => {
+      this.setAnimations();
+    });
   }
 
   init() {
@@ -36,10 +56,8 @@ export default class Loader {
     this.scene.add(this.overlay);
   }
 
-  animations() {
+  setAnimations() {
     const tl = anime.timeline();
-
-    //set progress bar opacity to 0 with anime.js
 
     tl.add({
       targets: this.loaderDiv,

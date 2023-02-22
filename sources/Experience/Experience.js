@@ -7,7 +7,6 @@ import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
 import Resources from "@utils/Resources.js";
 import Mouse from "@utils/Mouse.js";
-import Parallax from "@utils/Parallax.js";
 
 import World from "@world/World.js";
 
