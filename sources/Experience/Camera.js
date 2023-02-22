@@ -1,6 +1,5 @@
 import { PerspectiveCamera } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-
 import Experience from "@experience/Experience.js";
 
 export default class Camera {
@@ -10,6 +9,7 @@ export default class Camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
+    this.parallax = this.experience.parallax;
 
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("camera");
@@ -21,7 +21,8 @@ export default class Camera {
 
   setInstance() {
     this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 1, 500);
-    this.instance.position.set(0, 1.5, 10);
+    this.instance.position.set(0, 0, -10);
+    this.instance.lookAt(0, 0, 0);
     this.scene.add(this.instance);
 
     if (this.debug.active) {
@@ -65,5 +66,10 @@ export default class Camera {
 
   update() {
     this.controls.update();
+
+    // if (this.parallax.params.active) {
+    //   this.instance.position.x += (this.parallax.instance.x - this.instance.position.x) * this.parallax.params.ease;
+    //   this.instance.position.y += (this.parallax.instance.y - this.instance.position.y) * this.parallax.params.ease;
+    // }
   }
 }

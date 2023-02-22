@@ -22,6 +22,7 @@ export default defineConfig({
       "@shaders": path.resolve(__dirname, "./sources/Experience/Shaders"),
       "@utils": path.resolve(__dirname, "./sources/Experience/Utils"),
       "@world": path.resolve(__dirname, "./sources/Experience/World"),
+      "@scss": path.resolve(__dirname, "./sources/scss"),
     },
   },
   plugins: [glsl()],

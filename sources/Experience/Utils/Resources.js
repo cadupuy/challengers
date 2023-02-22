@@ -1,15 +1,17 @@
-import { TextureLoader, CubeTextureLoader } from "three";
+import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-
 import EventEmitter from "./EventEmitter.js";
+
 export default class Resources extends EventEmitter {
   constructor(sources) {
     super();
 
     this.sources = sources;
+
     this.items = {};
     this.toLoad = this.sources.length;
     this.loaded = 0;
+
     this.setLoaders();
     this.startLoading();
   }
@@ -17,8 +19,8 @@ export default class Resources extends EventEmitter {
   setLoaders() {
     this.loaders = {};
     this.loaders.gltfLoader = new GLTFLoader();
-    this.loaders.textureLoader = new TextureLoader();
-    this.loaders.cubeTextureLoader = new CubeTextureLoader();
+    this.loaders.textureLoader = new THREE.TextureLoader();
+    this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader();
   }
 
   startLoading() {
@@ -44,7 +46,6 @@ export default class Resources extends EventEmitter {
     this.items[source.name] = file;
 
     this.loaded++;
-    this.progressRatio = (this.loaded / this.toLoad) * 100;
 
     if (this.loaded === this.toLoad) {
       this.trigger("ready");
