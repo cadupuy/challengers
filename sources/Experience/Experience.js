@@ -58,11 +58,17 @@ export default class Experience {
      */
     this.SCENE = 0;
     this.MOTION;
-    this.AUDIO_PLAYING;
+    this.CURRENT_AUDIO;
+    this.AUDIO_IS_PLAYING = false;
 
-    //this.IS_VOICE_MODE = false;
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
     this.motionWrapperElement = document.querySelector('.motion-wrapper');
+    this.pauseElement = document.querySelector('.ui-elt.pause');
+    this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
+
+    this.fullscreenElement.addEventListener('click', () => {
+      this.toggleFullScreen();
+    })
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -133,36 +139,59 @@ export default class Experience {
 
   startMotion() {
     this.motionWrapperElement.classList.add('active');
-    this.startAudio(1)
+    this.startAudio(2)
+  }
+
+  toggleFullScreen() {
+
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  
   }
 
   startAudio(index) { 
-    this.AUDIO_PLAYING = audios[index-1];
-    this.playAudio();
-    this.startSubtitles();
+    this.CURRENT_AUDIO = audios[index-1];
+    if(!this.AUDIO_IS_PLAYING) {
+      this.playAudio();
+      this.startSubtitles();
+    }
   }
   
   playAudio() {
-    let audio = new Howl({ src: [this.AUDIO_PLAYING.path] });
+
+    this.AUDIO_IS_PLAYING = true;
+    let audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
     audio.play();
+
+    audio.on('end', function() {
+      this.AUDIO_IS_PLAYING = false;
+    });
+
+    this.pauseElement.addEventListener('click', () => {
+      audio.pause();
+    });
+
+  }
+
+  resetSubtitles() {
+    this.subtitlesElement.innerHTML = '';
   }
 
   startSubtitles() {
 
     let subtitlesLength = this.getSubtitlesLength();
-
-    let timecode = 0;
-    let timecodeMS = 0;
-
-    let current_subtitle;
+    let timecode = 0, timecodeMS = 0, current_subtitle;
 
     const interval = setInterval(() => {
 
       timecode++;
       timecodeMS = timecode / 10;
 
-      current_subtitle = this.AUDIO_PLAYING.subtitles.filter((elt, i) => {
-        return this.AUDIO_PLAYING.subtitles[i+1]?.time > timecodeMS
+      current_subtitle = this.CURRENT_AUDIO.subtitles.filter((elt, i) => {
+        return this.CURRENT_AUDIO.subtitles[i+1]?.time > timecodeMS
       })[0];
 
       if(current_subtitle != undefined)
@@ -171,7 +200,7 @@ export default class Experience {
       if(timecodeMS === subtitlesLength) {
         clearInterval(interval);
         setTimeout(() => {
-          this.subtitlesElement.innerHTML = '';
+          this.resetSubtitles();
         }, 1000);
       }
 
@@ -179,8 +208,7 @@ export default class Experience {
   }
 
   getSubtitlesLength() {
-    let subtitles = this.AUDIO_PLAYING.subtitles;
-    // Add 2 seconds after the last subtitle timing to get the last sentence
+    let subtitles = this.CURRENT_AUDIO.subtitles;
     return subtitles[subtitles.length-1].time;
   }
 
