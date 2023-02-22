@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 import Experience from "@experience/Experience.js";
 
-export default class Fox {
+export default class Item {
   constructor() {
     this.experience = new Experience();
     this.camera = this.experience.camera;
@@ -37,7 +37,7 @@ export default class Fox {
 
     this.experience.$raycast.add(this.model, {
       onClick: () => {
-        console.log("click");
+        this.experience.startMotion()
       },
     });
 

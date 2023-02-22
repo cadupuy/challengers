@@ -58,14 +58,11 @@ export default class Experience {
      */
     this.SCENE = 0;
     this.MOTION;
-    this.ID_AUDIO_PLAYING;
+    this.AUDIO_PLAYING;
 
     //this.IS_VOICE_MODE = false;
-    this.motionWrapper = document.querySelector('.motion-wrapper');
-
-    this.audio1 = new Howl({
-      src: ['/audio/extrait-timothee.mp3']
-    });
+    this.subtitlesElement = document.querySelector('.subtitles-wrapper');
+    this.motionWrapperElement = document.querySelector('.motion-wrapper');
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -134,27 +131,55 @@ export default class Experience {
     this.$raycast.update(this.camera.instance);
   }
 
-  startMotion(index) {
-    // Show the motion
-    this.motionWrapper.classList.add('active');
-    this.ID_AUDIO_PLAYING = index;
-    this.startAudio()
+  startMotion() {
+    this.motionWrapperElement.classList.add('active');
+    this.startAudio(1)
   }
 
-  startAudio() {
+  startAudio(index) { 
+    this.AUDIO_PLAYING = audios[index-1];
+    this.playAudio();
     this.startSubtitles();
   }
-
-  getSubtitlesLength(subtitles) {
-    let length = 0;
-    for(let subtitle of subtitles) length += subtitle.time;
-    return length;
+  
+  playAudio() {
+    let audio = new Howl({ src: [this.AUDIO_PLAYING.path] });
+    audio.play();
   }
 
   startSubtitles() {
-    if(audios[this.ID_AUDIO_PLAYING-1] === undefined) return false;
-    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING-1].subtitles);
-    console.log('Durée totale : ' + dureeTotale);
+
+    let subtitlesLength = this.getSubtitlesLength();
+
+    let timecode = 0;
+    let timecodeMS = 0;
+
+    let current_subtitle;
+
+    const interval = setInterval(() => {
+
+      timecode++;
+      timecodeMS = timecode / 10;
+
+      current_subtitle = this.AUDIO_PLAYING.subtitles.filter((elt, i) => {
+        return this.AUDIO_PLAYING.subtitles[i+1]?.time > timecodeMS
+      })[0];
+
+      if(current_subtitle != undefined)
+        this.subtitlesElement.innerHTML = current_subtitle.content;
+
+      if(timecodeMS === subtitlesLength) {
+        clearInterval(interval);
+        console.log('fin');
+      }
+
+    }, 100)
+  }
+
+  getSubtitlesLength() {
+    let subtitles = this.AUDIO_PLAYING.subtitles;
+    // Add 2 seconds after the last subtitle timing to get the last sentence
+    return subtitles[subtitles.length-1].time;
   }
 
   destroy() {
