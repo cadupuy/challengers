@@ -166,11 +166,13 @@ export default class Experience {
       })[0];
 
       if(current_subtitle != undefined)
-        this.subtitlesElement.innerHTML = current_subtitle.content;
+        this.subtitlesElement.innerHTML = `<span>${current_subtitle.content}</span>`;
 
       if(timecodeMS === subtitlesLength) {
         clearInterval(interval);
-        console.log('fin');
+        setTimeout(() => {
+          this.subtitlesElement.innerHTML = '';
+        }, 1000);
       }
 
     }, 100)
