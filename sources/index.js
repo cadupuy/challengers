@@ -1,4 +1,5 @@
-import "./style.scss";
+
+import "@scss/main.scss";
 
 import Experience from "@experience/Experience.js";
 

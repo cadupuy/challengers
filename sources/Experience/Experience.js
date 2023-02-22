@@ -6,6 +6,8 @@ import Sizes from "@utils/Sizes.js";
 import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
 import Resources from "@utils/Resources.js";
+import Mouse from "@utils/Mouse.js";
+import Parallax from "@utils/Parallax.js";
 
 import World from "@world/World.js";
 
@@ -32,16 +34,18 @@ export default class Experience {
     this.canvas = _canvas;
 
     // Setup
-    this.setRaycaster();
-    this.setDebug();
-    this.setStats();
-    this.setSizes();
-    this.setTime();
-    this.setScene();
-    this.setResources();
-    this.setCamera();
-    this.setRenderer();
-    this.setWorld();
+    raycastPlugin(this);
+    this.debug = new Debug();
+    this.stats = new Stats();
+    this.sizes = new Sizes();
+    this.time = new Time();
+    this.scene = new Scene();
+    this.resources = new Resources(sources);
+    this.parallax = new Parallax();
+    this.mouse = new Mouse();
+    this.camera = new Camera();
+    this.renderer = new Renderer();
+    this.world = new World();
 
     /**
      * SCENE :
@@ -118,6 +122,7 @@ export default class Experience {
 
   resize() {
     this.camera.resize();
+    this.world.update();
     this.renderer.resize();
   }
 

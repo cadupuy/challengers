@@ -1,7 +1,13 @@
 export default [
   {
-    name: "car",
+    name: "item",
     type: "gltfModel",
-    path: "models/car/scene.gltf",
+    path: "models/item.glb",
+  },
+
+  {
+    name: "texture",
+    type: "texture",
+    path: "textures/texture.png",
   },
 ];

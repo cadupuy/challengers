@@ -1,31 +1,36 @@
 import Experience from "@experience/Experience.js";
 
 import Environment from "@world/Environment.js";
-import Box from "@world/Box.js";
+import Item from "@world/Item.js";
 
 export default class World {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
+    this.resources = this.experience.resources;
+ 
 
-    this.setEnvironment();
-    this.setBox();
-    
-    document.addEventListener('click', () => {
-      this.experience.startMotion(1);
-    })
+    this.resources.on("ready", () => {
+      // Setup
+      this.setEnvironment();
+      this.setLocker();
+      
+      document.addEventListener('click', () => {
+        this.experience.startMotion(1);
+      })
 
+    });
+  }
+
+  setLocker() {
+    this.item = new Item();
   }
 
   setEnvironment() {
     this.environment = new Environment();
   }
 
-  setBox() {
-    this.box = new Box();
-  }
-
   update() {
-    if (this.box) this.box.update();
+    if (this.item) this.item.update();
   }
 }
