@@ -9,22 +9,13 @@
 
 @use "./shared/links.scss";
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-*:after,
-*:before {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: geometricPrecision;
-}
-
 html,
 body {
   overflow: hidden;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
 }
 
 .webgl {
@@ -46,6 +37,29 @@ a {
   left: 0;
   top: 0;
   z-index: 1;
+  .ui-elt {
+    padding: 1em 2em;
+    border: 2px solid #fff;
+    color: #fff;
+    position: absolute;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 1;
+    cursor: pointer;
+    &:hover {
+      background-color: #fff;
+      color: #000;
+    }
+    &.left {
+      left: 2em;
+    }
+    &.top {
+      top: 2em;
+    }
+    &.bottom {
+      bottom: 2em;
+    }
+  }
   .audio-bar {
     width: 100%;
     max-width: 500px;
