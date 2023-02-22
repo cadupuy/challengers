@@ -66,10 +66,5 @@ export default class Camera {
 
   update() {
     this.controls.update();
-
-    // if (this.parallax.params.active) {
-    //   this.instance.position.x += (this.parallax.instance.x - this.instance.position.x) * this.parallax.params.ease;
-    //   this.instance.position.y += (this.parallax.instance.y - this.instance.position.y) * this.parallax.params.ease;
-    // }
   }
 }
