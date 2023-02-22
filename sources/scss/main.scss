@@ -1,5 +1,7 @@
 @use "./base/reset";
 
+@use "./components/loader";
+
 @use "./utils/variables";
 @use "./utils/breakpoints";
 @use "./utils/easings";

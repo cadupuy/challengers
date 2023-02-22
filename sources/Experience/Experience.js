@@ -1,5 +1,5 @@
 import { Scene, Mesh } from "three";
-import {Howl, Howler} from 'howler';
+import { Howl, Howler } from "howler";
 
 import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
@@ -10,6 +10,8 @@ import Mouse from "@utils/Mouse.js";
 import Parallax from "@utils/Parallax.js";
 
 import World from "@world/World.js";
+
+import Loader from "./Loader";
 
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
@@ -34,18 +36,19 @@ export default class Experience {
     this.canvas = _canvas;
 
     // Setup
-    raycastPlugin(this);
-    this.debug = new Debug();
-    this.stats = new Stats();
-    this.sizes = new Sizes();
-    this.time = new Time();
-    this.scene = new Scene();
-    this.resources = new Resources(sources);
-    this.parallax = new Parallax();
-    this.mouse = new Mouse();
-    this.camera = new Camera();
-    this.renderer = new Renderer();
-    this.world = new World();
+    this.setRaycaster();
+    this.setMouse();
+    this.setDebug();
+    this.setStats();
+    this.setSizes();
+    this.setTime();
+    this.setScene();
+    this.setResources();
+    this.setLoader();
+    this.setCamera();
+    this.setParallax();
+    this.setRenderer();
+    this.setWorld();
 
     /**
      * SCENE :
@@ -61,10 +64,10 @@ export default class Experience {
     this.ID_AUDIO_PLAYING;
 
     //this.IS_VOICE_MODE = false;
-    this.motionWrapper = document.querySelector('.motion-wrapper');
+    this.motionWrapper = document.querySelector(".motion-wrapper");
 
     this.audio1 = new Howl({
-      src: ['/audio/extrait-timothee.mp3']
+      src: ["/audio/extrait-timothee.mp3"],
     });
 
     // Resize event
@@ -88,6 +91,10 @@ export default class Experience {
     this.debug = new Debug();
   }
 
+  setLoader() {
+    this.loader = new Loader();
+  }
+
   setStats() {
     this.stats = new Stats();
   }
@@ -102,6 +109,14 @@ export default class Experience {
 
   setScene() {
     this.scene = new Scene();
+  }
+
+  setMouse() {
+    this.mouse = new Mouse();
+  }
+
+  setParallax() {
+    // this.parallax = new Parallax();
   }
 
   setResources() {
@@ -129,16 +144,17 @@ export default class Experience {
   update() {
     if (this.stats.active) this.stats.update();
     this.camera.update();
-    this.world.update();
-    this.renderer.update();
+    if (this.parallax) this.parallax.update();
+    if (this.world) this.world.update();
+    if (this.renderer) this.renderer.update();
     this.$raycast.update(this.camera.instance);
   }
 
   startMotion(index) {
     // Show the motion
-    this.motionWrapper.classList.add('active');
+    this.motionWrapper.classList.add("active");
     this.ID_AUDIO_PLAYING = index;
-    this.startAudio()
+    this.startAudio();
   }
 
   startAudio() {
@@ -147,14 +163,14 @@ export default class Experience {
 
   getSubtitlesLength(subtitles) {
     let length = 0;
-    for(let subtitle of subtitles) length += subtitle.time;
+    for (let subtitle of subtitles) length += subtitle.time;
     return length;
   }
 
   startSubtitles() {
-    if(audios[this.ID_AUDIO_PLAYING-1] === undefined) return false;
-    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING-1].subtitles);
-    console.log('Durée totale : ' + dureeTotale);
+    if (audios[this.ID_AUDIO_PLAYING - 1] === undefined) return false;
+    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING - 1].subtitles);
+    console.log("Durée totale : " + dureeTotale);
   }
 
   destroy() {

@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 import Experience from "@experience/Experience.js";
 
-export default class Fox {
+export default class Item {
   constructor() {
     this.experience = new Experience();
     this.camera = this.experience.camera;
