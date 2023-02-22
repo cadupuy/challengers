@@ -12,8 +12,6 @@ export default class Resources extends EventEmitter {
     this.toLoad = this.sources.length;
     this.loaded = 0;
 
-    this.percent = document.querySelector(".loader__percent");
-
     this.setLoaders();
     this.startLoading();
   }
@@ -51,7 +49,7 @@ export default class Resources extends EventEmitter {
 
     this.progressRatio = (this.loaded / this.toLoad) * 100;
 
-    this.percent.innerHTML = `${this.progressRatio}%`;
+    this.trigger("percent", [this.progressRatio]);
 
     if (this.loaded === this.toLoad) {
       this.trigger("ready");
