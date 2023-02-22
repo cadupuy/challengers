@@ -8,11 +8,17 @@ export default class World {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+ 
 
     this.resources.on("ready", () => {
       // Setup
       this.setEnvironment();
       this.setLocker();
+      
+      document.addEventListener('click', () => {
+        this.experience.startMotion(1);
+      })
+
     });
   }
 

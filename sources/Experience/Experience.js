@@ -1,4 +1,5 @@
 import { Scene, Mesh } from "three";
+import {Howl, Howler} from 'howler';
 
 import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
@@ -13,6 +14,7 @@ import World from "@world/World.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
+import audios from "@experience/audios.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -44,6 +46,26 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.world = new World();
+
+    /**
+     * SCENE :
+     * 1 - Écran d'accueil
+     * 2 - Couloir scroll
+     * 3 - Vestiaire
+     * 4 - Casier (intérieur)
+     * 5 - Motion (peu importe lequel)
+     * 6 - Écran de fin
+     */
+    this.SCENE = 0;
+    this.MOTION;
+    this.ID_AUDIO_PLAYING;
+
+    //this.IS_VOICE_MODE = false;
+    this.motionWrapper = document.querySelector('.motion-wrapper');
+
+    this.audio1 = new Howl({
+      src: ['/audio/extrait-timothee.mp3']
+    });
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -110,6 +132,29 @@ export default class Experience {
     this.world.update();
     this.renderer.update();
     this.$raycast.update(this.camera.instance);
+  }
+
+  startMotion(index) {
+    // Show the motion
+    this.motionWrapper.classList.add('active');
+    this.ID_AUDIO_PLAYING = index;
+    this.startAudio()
+  }
+
+  startAudio() {
+    this.startSubtitles();
+  }
+
+  getSubtitlesLength(subtitles) {
+    let length = 0;
+    for(let subtitle of subtitles) length += subtitle.time;
+    return length;
+  }
+
+  startSubtitles() {
+    if(audios[this.ID_AUDIO_PLAYING-1] === undefined) return false;
+    let dureeTotale = this.getSubtitlesLength(audios[this.ID_AUDIO_PLAYING-1].subtitles);
+    console.log('Durée totale : ' + dureeTotale);
   }
 
   destroy() {
