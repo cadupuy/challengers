@@ -55,7 +55,13 @@ export default class Experience {
     this.SCENE = 0;
     
     /**
-     * Define the id of the motion that is playing
+     * MOTION :
+     * 1 - Chaussure
+     * 2 - Micro
+     * 3 - Manette
+     * 4 - Lunette
+     * 5 - Airpods
+     * 6 - Lien
      */
     this.MOTION;
 
