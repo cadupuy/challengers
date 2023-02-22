@@ -62,6 +62,8 @@ export default class Experience {
     this.AUDIO_IS_PLAYING = false;
     this.AUDIO_VOLUME = 1;
 
+    this.audio;
+
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
     this.motionWrapperElement = document.querySelector('.motion-wrapper');
     this.soundElement = document.querySelector('.ui-elt.sound');
@@ -160,27 +162,43 @@ export default class Experience {
       this.startSubtitles();
     }
   }
+
+  toggleAudioVolume() {
+
+    switch (this.AUDIO_VOLUME) {
+      case 1:
+        this.AUDIO_VOLUME = 0;
+        this.audio.volume(0);
+        this.soundElement.querySelector('span').innerHTML = 0;
+        break;
+      case .5:
+        this.AUDIO_VOLUME = 1;
+        this.audio.volume(1);
+        this.soundElement.querySelector('span').innerHTML = 100;
+        break;
+      case 0:
+        this.AUDIO_VOLUME = .5;
+        this.audio.volume(.5);
+        this.soundElement.querySelector('span').innerHTML = 50;
+        break;
+      default:
+        console.log(`audio error`);
+    }
+    
+  }
   
   playAudio() {
 
     this.AUDIO_IS_PLAYING = true;
-    let audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
-    audio.play();
+    this.audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
+    this.audio.play();
 
-    audio.on('end', function() {
+    this.audio.on('end', function() {
       this.AUDIO_IS_PLAYING = false;
     });
 
     this.soundElement.addEventListener('click', () => {
-      if(this.AUDIO_VOLUME === 1) {
-        this.AUDIO_VOLUME = .1;
-        audio.volume(.1);
-        this.soundElement.querySelector('span').innerHTML = 10;
-      } else {
-        this.AUDIO_VOLUME = 1;
-        audio.volume(1);
-        this.soundElement.querySelector('span').innerHTML = 100;
-      }
+      this.toggleAudioVolume();
     });
 
   }
