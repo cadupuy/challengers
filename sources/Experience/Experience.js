@@ -1,4 +1,5 @@
 import { Scene, Mesh } from "three";
+import {Howl, Howler} from 'howler';
 
 import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
@@ -11,6 +12,7 @@ import World from "@world/World.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
+import audios from "@experience/audios.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -41,8 +43,28 @@ export default class Experience {
     this.setRenderer();
     this.setWorld();
 
+    /**
+     * SCENE :
+     * 1 - Écran d'accueil
+     * 2 - Couloir scroll
+     * 3 - Vestiaire
+     * 4 - Casier (intérieur)
+     * 5 - Motion (peu importe lequel)
+     * 6 - Écran de fin
+     */
+    this.SCENE = 0;
+    
+    /**
+     * Define the id of the motion that is playing
+     */
+    this.MOTION;
+
     //this.IS_VOICE_MODE = false;
     this.motionWrapper = document.querySelector('.motion-wrapper');
+
+    this.audio1 = new Howl({
+      src: ['/audio/extrait-timothee.mp3']
+    });
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -111,7 +133,21 @@ export default class Experience {
   }
 
   startMotion(index) {
+    this.MOTION = index;
     this.motionWrapper.classList.add('active');
+  }
+
+  startAudio() {
+    this.audio1.play();
+    this.startSubtitles(1);
+  }
+
+  startSubtitles(index) {
+    if(audios[index-1] === undefined) return false;
+    // Get the total length of all the subtitles
+    let dureeTotale = 0;
+    for(let subtitle of audios[index-1].subtitles) dureeTotale += subtitle.time;
+    console.log('Durée totale : ' + dureeTotale);
   }
 
   destroy() {
