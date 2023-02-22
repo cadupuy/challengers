@@ -2,6 +2,7 @@ import Experience from "@experience/Experience.js";
 
 import Environment from "@world/Environment.js";
 import Item from "@world/Item.js";
+import Locker from "@world/Locker.js";
 import Spline from "@world/Spline.js";
 
 export default class World {
@@ -13,6 +14,7 @@ export default class World {
     this.resources.on("ready", () => {
       // Setup
       this.setEnvironment();
+      this.setItem();
       this.setLocker();
       this.setSpline();
     });
@@ -22,8 +24,12 @@ export default class World {
     this.spline = new Spline();
   }
 
-  setLocker() {
+  setItem() {
     this.item = new Item();
+  }
+
+  setLocker() {
+    this.locker = new Locker();
   }
 
   setEnvironment() {
