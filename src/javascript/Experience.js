@@ -1,9 +1,3 @@
-// TODO :
-//vector3.lerp
-// lerp entre 2 positions
-// ktx loader
-// cocher case compression blender
-
 import { Scene, Mesh } from "three";
 
 import Debug from "@utils/Debug.js";
@@ -12,16 +6,16 @@ import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
 import Resources from "@utils/Resources.js";
 import Mouse from "@utils/Mouse.js";
+import { raycastPlugin } from "@utils/Raycaster.js";
 
 import World from "@world/World.js";
+import Loader from "@world/Loader";
 
-import Loader from "./Loader";
-
-import UI from "@ui/UI.js";
 import Camera from "@javascript/Camera.js";
 import Renderer from "@javascript/Renderer.js";
 import sources from "@javascript/sources.js";
-import { raycastPlugin } from "@utils/Raycaster.js";
+
+import UI from "@ui/UI.js";
 
 let instance = null;
 
@@ -170,3 +164,9 @@ export default class Experience {
 		if (this.debug) this.debug.ui.destroy();
 	}
 }
+
+// TODO :
+//vector3.lerp
+// lerp entre 2 positions
+// ktx loader
+// cocher case compression blender
