@@ -43,13 +43,13 @@ export default class Item {
 
         this.experience.$raycast.add(child, {
           onClick: () => {
-            this.experience.startMotion(1);
+            this.experience.ui.startMotion(1);
           },
         });
       } else if(child.name === "Objet_2_Lampe") {
         this.experience.$raycast.add(child, {
           onClick: () => {
-            this.experience.startMotion(2);
+            this.experience.ui.startMotion(2);
           },
         });
       }

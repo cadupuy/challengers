@@ -16,7 +16,6 @@ import UI from "@ui/UI.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
-import audios from "@experience/audios.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -51,34 +50,6 @@ export default class Experience {
     this.setWorld();
 
     this.ui = new UI();
-
-    /**
-     * SCENE :
-     * 1 - Écran d'accueil
-     * 2 - Couloir scroll
-     * 3 - Vestiaire
-     * 4 - Casier (intérieur)
-     * 5 - Motion (peu importe lequel)
-     * 6 - Écran de fin
-     */
-    this.SCENE = 0;
-    this.CURRENT_MOTION;
-    this.CURRENT_AUDIO;
-    this.AUDIO_IS_PLAYING = false;
-
-    this.audio;
-    this.subtitles;
-
-    this.audios = audios;
-
-    this.motionWrapperElement = document.querySelector('.motion-wrapper');
-    this.theaterElement = this.motionWrapperElement.querySelector('.theater');
-    this.closeMotionElement = this.motionWrapperElement.querySelector('.close');
-    this.subtitlesElement = document.querySelector('.subtitles-wrapper');
-
-    this.closeMotionElement.addEventListener('click', () => {
-      this.stopMotion();
-    });
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -158,100 +129,6 @@ export default class Experience {
     if (this.world) this.world.update();
     if (this.renderer) this.renderer.update();
     this.$raycast.update(this.camera.instance);
-  }
-
-  startMotion(index) {
-    if(index >= 1 && index < 4) {
-      this.CURRENT_MOTION = index;
-      this.motionWrapperElement.classList.add('active');
-      this.startMotionAnimation();
-      this.startMotionAudio();
-    }
-  }
-
-  resetMotionsAnimations() {
-    for(let motion of this.motionWrapperElement.querySelectorAll('.motion')) {
-      motion.classList.remove('active');
-    }
-  }
-
-  startMotionAnimation() {
-    this.resetMotionsAnimations();
-    this.theaterElement.querySelector(`.motion-${this.CURRENT_MOTION}`).classList.add('active');
-  }
-
-  stopMotion() {
-    this.motionWrapperElement.classList.remove('active');
-    this.stopMotionAudio();
-    this.stopSubtitles();
-  }
-
-  startMotionAudio() { 
-    this.CURRENT_AUDIO = audios[this.CURRENT_MOTION-1];
-    if(!this.AUDIO_IS_PLAYING) {
-      this.playMotionAudio();
-      this.startSubtitles();
-    }
-  }
-  
-  playMotionAudio() {
-
-    this.AUDIO_IS_PLAYING = true;
-    this.audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
-    this.audio.play();
-
-    this.audio.on('end', function() {
-      this.AUDIO_IS_PLAYING = false;
-    });
-
-  }
-
-  stopMotionAudio() {
-
-    this.audio.stop();
-    this.AUDIO_IS_PLAYING = false;
-
-  }
-
-  resetSubtitles() {
-    this.subtitlesElement.innerHTML = '';
-  }
-
-  startSubtitles() {
-
-    let subtitlesLength = this.getSubtitlesLength();
-    let timecode = 0, timecodeMS = 0, current_subtitle;
-
-    this.subtitles = setInterval(() => {
-
-      timecode++;
-      timecodeMS = timecode / 10;
-
-      current_subtitle = this.CURRENT_AUDIO.subtitles.filter((elt, i) => {
-        return this.CURRENT_AUDIO.subtitles[i+1]?.time > timecodeMS
-      })[0];
-
-      if(current_subtitle != undefined)
-        this.subtitlesElement.innerHTML = `<span>${current_subtitle.content}</span>`;
-
-      if(timecodeMS === subtitlesLength) {
-        clearInterval(this.subtitles);
-        setTimeout(() => {
-          this.resetSubtitles();
-        }, 1000);
-      }
-
-    }, 100)
-  }
-
-  stopSubtitles() {
-    this.resetSubtitles();
-    clearInterval(this.subtitles);
-  }
-
-  getSubtitlesLength() {
-    let subtitles = this.CURRENT_AUDIO.subtitles;
-    return subtitles[subtitles.length-1].time;
   }
 
   destroy() {
