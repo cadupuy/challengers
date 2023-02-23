@@ -35,8 +35,6 @@ export default class Experience {
     // Options
     this.canvas = _canvas;
 
-    this.ui = new UI();
-
     // Setup
     this.setRaycaster();
     this.setMouse();
@@ -65,7 +63,6 @@ export default class Experience {
     this.CURRENT_MOTION;
     this.CURRENT_AUDIO;
     this.AUDIO_IS_PLAYING = false;
-    this.AUDIO_VOLUME = 1;
 
     this.audio;
     this.subtitles;
@@ -76,7 +73,8 @@ export default class Experience {
     this.theaterElement = this.motionWrapperElement.querySelector('.theater');
     this.closeMotionElement = this.motionWrapperElement.querySelector('.close');
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
-    this.soundElement = document.querySelector('.ui-elt.sound');
+
+    this.ui = new UI();
 
     this.closeMotionElement.addEventListener('click', () => {
       this.stopMotion();
@@ -204,10 +202,6 @@ export default class Experience {
 
     this.audio.on('end', function() {
       this.AUDIO_IS_PLAYING = false;
-    });
-
-    this.soundElement.addEventListener('click', () => {
-      this.toggleAudioVolume();
     });
 
   }

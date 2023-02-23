@@ -17,10 +17,13 @@ export default class UI {
     window.ui = this;
 
     this.experience = new Experience();
+
+    this.audioVolume = 1;
     
     this.sound_elt = document.querySelector('.ui-elt.sound');
-    this.fullscreen_elt = document.querySelector('.ui-elt.fullscreen');
-    this.vocal_elt = document.querySelector('.ui-elt.vocal');
+    this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
+    this.vocalElement = document.querySelector('.ui-elt.vocal');
+    this.soundElement = document.querySelector('.ui-elt.sound');
 
     this.setEvents();
 
@@ -28,12 +31,16 @@ export default class UI {
 
   setEvents() {
 
-    this.vocal_elt.addEventListener('click', () => {
+    this.vocalElement.addEventListener('click', () => {
       this.setRecognition();
     });
 
-    this.fullscreen_elt.addEventListener('click', () => {
-      toggleFullScreen();
+    this.fullscreenElement.addEventListener('click', () => {
+      this.toggleFullScreen();
+    });
+
+    this.soundElement.addEventListener('click', () => {
+      this.toggleAudioVolume();
     });
 
   }
@@ -86,19 +93,19 @@ export default class UI {
 
   toggleAudioVolume() {
 
-    switch (this.audio_volume) {
+    switch (this.audioVolume) {
       case 1:
-        this.audio_volume = 0;
+        this.audioVolume = 0;
         Howler.volume(0);
         this.soundElement.querySelector('span').innerHTML = 0;
         break;
       case .5:
-        this.audio_volume = 1;
+        this.audioVolume = 1;
         Howler.volume(1);
         this.soundElement.querySelector('span').innerHTML = 100;
         break;
       case 0:
-        this.audio_volume = .5;
+        this.audioVolume = .5;
         Howler.volume(.5);
         this.soundElement.querySelector('span').innerHTML = 50;
         break;
