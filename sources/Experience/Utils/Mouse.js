@@ -1,13 +1,15 @@
 import { Vector2 } from "three";
 
+import EventEmitter from "./EventEmitter.js";
 import Experience from "@experience/Experience.js";
 
 const tVec2a = new Vector2();
 const tVec2b = new Vector2();
 const tVec2c = new Vector2();
 
-export default class Mouse {
+export default class Mouse extends EventEmitter {
   constructor() {
+    super();
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
 
@@ -28,6 +30,8 @@ export default class Mouse {
     this.dom.set(e.clientX, e.clientY);
     this.frag.set(this.dom.x / window.innerWidth, this.dom.y / window.innerHeight);
     this.scene.set((this.dom.x / window.innerWidth) * 2 - 1, -(this.dom.y / window.innerHeight) * 2 + 1);
+
+    this.trigger("mouseMove", [this.dom, this.frag, this.scene]);
   };
 
   destroy() {

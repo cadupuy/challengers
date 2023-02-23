@@ -36,6 +36,8 @@ export default class Item {
     this.texture.flipY = false;
     const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
 
+    console.log(this.model);
+
     this.model.traverse((child) => {
       if (child.name === "Objet_1_Suzanne") {
         child.material = bakedMaterial;
@@ -46,7 +48,7 @@ export default class Item {
             this.experience.ui.startMotion(1);
           },
         });
-      } else if(child.name === "Objet_2_Lampe") {
+      } else if (child.name === "Objet_2_Lampe") {
         this.experience.$raycast.add(child, {
           onClick: () => {
             this.experience.ui.startMotion(2);
