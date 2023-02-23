@@ -1,5 +1,5 @@
 import { Scene, Mesh } from "three";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 
 import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
@@ -7,16 +7,15 @@ import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
 import Resources from "@utils/Resources.js";
 import Mouse from "@utils/Mouse.js";
-import toggleFullScreen from "@utils/UI.js";
 
 import World from "@world/World.js";
 
 import Loader from "./Loader";
 
+import UI from "@ui/UI.js";
 import Camera from "@experience/Camera.js";
 import Renderer from "@experience/Renderer.js";
 import sources from "@experience/sources.js";
-import audios from "@experience/audios.js";
 import { raycastPlugin } from "./Plugin/raycastPlugin";
 
 let instance = null;
@@ -50,36 +49,7 @@ export default class Experience {
     this.setRenderer();
     this.setWorld();
 
-    /**
-     * SCENE :
-     * 1 - Écran d'accueil
-     * 2 - Couloir scroll
-     * 3 - Vestiaire
-     * 4 - Casier (intérieur)
-     * 5 - Motion (peu importe lequel)
-     * 6 - Écran de fin
-     */
-    this.SCENE = 0;
-    this.MOTION;
-    this.CURRENT_AUDIO;
-    this.AUDIO_IS_PLAYING = false;
-    this.AUDIO_VOLUME = 1;
-
-    this.audio;
-
-    this.subtitlesElement = document.querySelector('.subtitles-wrapper');
-    this.motionWrapperElement = document.querySelector('.motion-wrapper');
-    this.soundElement = document.querySelector('.ui-elt.sound');
-    this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
-    this.vocalElement = document.querySelector('.ui-elt.vocal');
-
-    this.vocalElement.addEventListener('click', () => {
-      this.setupRecognition();
-    })
-
-    this.fullscreenElement.addEventListener('click', () => {
-      toggleFullScreen();
-    })
+    this.ui = new UI();
 
     // Resize event
     this.sizes.on("resize", () => {
@@ -159,139 +129,6 @@ export default class Experience {
     if (this.world) this.world.update();
     if (this.renderer) this.renderer.update();
     this.$raycast.update(this.camera.instance);
-  }
-
-  setupRecognition() {
-
-    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const recognition = new SpeechRecognition();
-    recognition.interimResults = true;
-
-    let _currrentSubtitle;
-
-    recognition.addEventListener('result', e => {
-      
-      const transcript = Array.from(e.results)
-        .map(result => result[0])
-        .map(result => result.transcript)
-
-      _currrentSubtitle = transcript[0].toLowerCase();
-
-      //subtitles.innerHTML = transcript
-    })
-    
-    recognition.addEventListener('end', e => {
-
-      if(_currrentSubtitle.includes('plein écran')) {
-        toggleFullScreen();
-      }
-
-      if(_currrentSubtitle.includes('volume')) {
-        this.toggleAudioVolume();
-      }
-
-      if(_currrentSubtitle.includes('lancer')) {
-        this.startMotion();
-      }
-
-      recognition.start()
-
-    })
-
-    recognition.start()
-    
-  }
-
-  startMotion(index) {
-    if(index >= 1 && index < 4) {
-      this.motionWrapperElement.classList.add('active');
-      this.startAudio(index)
-    }
-  }
-
-  startAudio(index) { 
-    this.CURRENT_AUDIO = audios[index-1];
-    if(!this.AUDIO_IS_PLAYING) {
-      this.playAudio();
-      this.startSubtitles();
-    }
-  }
-
-  toggleAudioVolume() {
-
-    switch (this.AUDIO_VOLUME) {
-      case 1:
-        this.AUDIO_VOLUME = 0;
-        Howler.volume(0);
-        this.soundElement.querySelector('span').innerHTML = 0;
-        break;
-      case .5:
-        this.AUDIO_VOLUME = 1;
-        Howler.volume(1);
-        this.soundElement.querySelector('span').innerHTML = 100;
-        break;
-      case 0:
-        this.AUDIO_VOLUME = .5;
-        Howler.volume(.5);
-        this.soundElement.querySelector('span').innerHTML = 50;
-        break;
-      default:
-        console.log(`audio error`);
-    }
-    
-  }
-  
-  playAudio() {
-
-    this.AUDIO_IS_PLAYING = true;
-    this.audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
-    this.audio.play();
-
-    this.audio.on('end', function() {
-      this.AUDIO_IS_PLAYING = false;
-    });
-
-    this.soundElement.addEventListener('click', () => {
-      this.toggleAudioVolume();
-    });
-
-  }
-
-  resetSubtitles() {
-    this.subtitlesElement.innerHTML = '';
-  }
-
-  startSubtitles() {
-
-    let subtitlesLength = this.getSubtitlesLength();
-    let timecode = 0, timecodeMS = 0, current_subtitle;
-
-    const interval = setInterval(() => {
-
-      timecode++;
-      timecodeMS = timecode / 10;
-
-      current_subtitle = this.CURRENT_AUDIO.subtitles.filter((elt, i) => {
-        return this.CURRENT_AUDIO.subtitles[i+1]?.time > timecodeMS
-      })[0];
-
-      if(current_subtitle != undefined)
-        this.subtitlesElement.innerHTML = `<span>${current_subtitle.content}</span>`;
-
-      if(timecodeMS === subtitlesLength) {
-        clearInterval(interval);
-        setTimeout(() => {
-          this.resetSubtitles();
-        }, 1000);
-      }
-
-    }, 100)
-  }
-
-  getSubtitlesLength() {
-    let subtitles = this.CURRENT_AUDIO.subtitles;
-    return subtitles[subtitles.length-1].time;
   }
 
   destroy() {

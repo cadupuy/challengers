@@ -19,6 +19,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@experience": path.resolve(__dirname, "./sources/Experience"),
+      "@ui": path.resolve(__dirname, "./sources/UI"),
       "@shaders": path.resolve(__dirname, "./sources/Experience/Shaders"),
       "@utils": path.resolve(__dirname, "./sources/Experience/Utils"),
       "@world": path.resolve(__dirname, "./sources/Experience/World"),

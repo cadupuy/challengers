@@ -97,12 +97,23 @@ a {
     }
   }
   .motion-wrapper {
+    .close {
+      display: none;
+      left: 50%;
+      top: 4em;
+      transform: translateX(-50%);
+    }
     &.active {
+      .close {
+        display: block;
+      }
       .theater {
-        animation-name: motion-wrapper-appear;
+        transform: scale(1);
+        opacity: 1;
       }
     }
     .theater,
+    .motion,
     .layer {
       width: 100%;
       height: 100%;
@@ -111,11 +122,15 @@ a {
     .theater {
       transform: scale(1.25);
       opacity: 0;
-      animation-duration: 1s;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
-      .layer {
-        object-fit: cover;
+      transition: 1s;
+      .motion {
+        display: none;
+        &.active {
+          display: block;
+        }
+        .layer {
+          object-fit: cover;
+        }
       }
     }
   }
