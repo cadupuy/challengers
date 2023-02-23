@@ -28,17 +28,15 @@ export default class Spline extends EventEmitter {
 
     window.addEventListener("wheel", (e) => {
       this.scrollCanvas(e);
-      this.trigger("wheel");
     });
   }
 
   setSpline() {
     this.curve = new CatmullRomCurve3([
-      new Vector3(-7, 2, -7),
-      new Vector3(7, 2, -7),
-      new Vector3(7, 2, 7),
-      new Vector3(-7, 2, 7),
-      new Vector3(-7, 2, -7),
+      new Vector3(-4, 2, -4),
+      new Vector3(4, 2, -4),
+      new Vector3(4, 2, 4),
+      new Vector3(-4, 2, 4),
     ]);
 
     const points = this.curve.getPoints(50);
@@ -66,7 +64,7 @@ export default class Spline extends EventEmitter {
 
     this.camera.instance.position.z = camPos.z;
     this.camera.instance.position.x = camPos.x;
-    this.camera.instance.position.y = camPos.y + 5;
-    this.camera.instance.lookAt(0, 0, 0);
+    this.camera.instance.position.y = camPos.y + 2;
+    this.camera.instance.lookAt(0, 2, 0);
   }
 }

@@ -32,16 +32,7 @@ export default class Locker {
 
   setModel() {
     this.model = this.resource.scene;
-    this.model.rotation.y = -Math.PI / 2;
     this.scene.add(this.model);
-
-    console.log(this.model);
-
-    this.experience.$raycast.add(this.model, {
-      onClick: () => {
-        this.experience.startMotion();
-      },
-    });
 
     this.diffuseMap.flipY = false;
     this.model.traverse((child) => {
