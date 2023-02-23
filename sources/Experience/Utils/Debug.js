@@ -8,4 +8,8 @@ export default class Debug {
       this.ui = new dat.GUI();
     }
   }
+
+  destroy() {
+    this.ui.destroy();
+  }
 }

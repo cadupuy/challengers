@@ -34,21 +34,25 @@ export default class Experience {
     // Options
     this.canvas = _canvas;
 
+    if (!this.canvas) {
+      console.warn("Missing 'targetElement' property");
+      return;
+    }
+
     // Setup
-    this.setRaycaster();
-    this.setMouse();
+    this.time = new Time();
+    this.sizes = new Sizes();
+    this.setConfig();
     this.setDebug();
     this.setStats();
-    this.setSizes();
-    this.setTime();
+    this.setRaycaster();
+    this.setMouse();
     this.setScene();
     this.setResources();
     this.setLoader();
     this.setCamera();
-    this.setParallax();
     this.setRenderer();
     this.setWorld();
-
     this.ui = new UI();
 
     // Resize event
@@ -64,28 +68,31 @@ export default class Experience {
     window.experience = this;
   }
 
+  setConfig() {
+    this.config = {};
+
+    // Debug
+    this.config.debug = window.location.hash === "#debug";
+  }
+
   setRaycaster() {
     raycastPlugin(this);
   }
 
   setDebug() {
-    this.debug = new Debug();
+    if (this.config.debug) {
+      this.debug = new Debug();
+    }
+  }
+
+  setStats() {
+    if (this.config.debug) {
+      this.stats = new Stats(true);
+    }
   }
 
   setLoader() {
     this.loader = new Loader();
-  }
-
-  setStats() {
-    this.stats = new Stats();
-  }
-
-  setSizes() {
-    this.sizes = new Sizes();
-  }
-
-  setTime() {
-    this.time = new Time();
   }
 
   setScene() {
@@ -94,10 +101,6 @@ export default class Experience {
 
   setMouse() {
     this.mouse = new Mouse();
-  }
-
-  setParallax() {
-    // this.parallax = new Parallax();
   }
 
   setResources() {
@@ -123,11 +126,14 @@ export default class Experience {
   }
 
   update() {
-    if (this.stats.active) this.stats.update();
+    if (this.stats) this.stats.update();
+
     this.camera.update();
-    if (this.parallax) this.parallax.update();
+
     if (this.world) this.world.update();
+
     if (this.renderer) this.renderer.update();
+
     this.$raycast.update(this.camera.instance);
   }
 

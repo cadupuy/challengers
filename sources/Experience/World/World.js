@@ -40,4 +40,6 @@ export default class World {
     if (this.item) this.item.update();
     if (this.spline) this.spline.update();
   }
+
+  destroy() {}
 }

@@ -9,61 +9,94 @@ export default class Camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
-    this.parallax = this.experience.parallax;
 
-    if (this.debug.active) {
+    if (this.debug) {
       this.debugFolder = this.debug.ui.addFolder("camera");
     }
 
+    // Set up
+    this.mode = "debug"; // defaultCamera \ debugCamera
+
     this.setInstance();
-    this.setControls();
+    this.setModes();
   }
 
   setInstance() {
-    this.instance = new PerspectiveCamera(50, this.sizes.width / this.sizes.height, 0.1, 500);
+    this.instance = new PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 150);
     this.instance.position.set(0, 0, -20);
+
     this.scene.add(this.instance);
 
-    if (this.debug.active) {
-      this.debugFolder.add(this.instance.position, "x").min(-500).max(500).step(0.01);
-      this.debugFolder.add(this.instance.position, "y").min(-500).max(500).step(0.01);
-      this.debugFolder.add(this.instance.position, "z").min(-500).max(500).step(0.01);
+    this.debugFolder.add(this.instance.position, "x").min(-100).max(100).step(0.01);
+    this.debugFolder.add(this.instance.position, "y").min(-100).max(100).step(0.01);
+    this.debugFolder.add(this.instance.position, "z").min(-100).max(100).step(0.01);
 
-      this.debugFolder
-        .add(this.instance, "near")
-        .min(0)
-        .max(10)
-        .step(0.1)
-        .onChange(() => this.instance.updateProjectionMatrix())
-        .name("Camera Near");
-      this.debugFolder
-        .add(this.instance, "far")
-        .min(0)
-        .max(1000)
-        .step(0.1)
-        .onChange(() => this.instance.updateProjectionMatrix())
-        .name("Camera Far");
-      this.debugFolder
-        .add(this.instance, "fov")
-        .min(0)
-        .max(180)
-        .step(0.1)
-        .onChange(() => this.instance.updateProjectionMatrix())
-        .name("Camera FOV");
-    }
+    this.debugFolder
+      .add(this.instance, "near")
+      .min(0.1)
+      .max(10)
+      .step(0.1)
+      .onChange(() => this.instance.updateProjectionMatrix())
+      .name("Camera Near");
+    this.debugFolder
+      .add(this.instance, "far")
+      .min(0.1)
+      .max(1000)
+      .step(0.1)
+      .onChange(() => this.instance.updateProjectionMatrix())
+      .name("Camera Far");
+    this.debugFolder
+      .add(this.instance, "fov")
+      .min(0.1)
+      .max(180)
+      .step(0.1)
+      .onChange(() => this.instance.updateProjectionMatrix())
+      .name("Camera FOV");
   }
 
-  setControls() {
-    this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.enableDamping = true;
+  setModes() {
+    this.modes = {};
+
+    // Default
+    this.modes.default = {};
+    this.modes.default.instance = this.instance.clone();
+
+    // Debug
+    this.modes.debug = {};
+    this.modes.debug.instance = this.instance.clone();
+    this.modes.debug.instance.position.set(0, 0, -20);
+
+    this.modes.debug.orbitControls = new OrbitControls(this.modes.debug.instance, this.canvas);
+    this.modes.debug.orbitControls.enabled = this.modes.debug.active;
+    this.modes.debug.orbitControls.screenSpacePanning = true;
+    this.modes.debug.orbitControls.enableKeys = false;
+    this.modes.debug.orbitControls.zoomSpeed = 0.25;
+    this.modes.debug.orbitControls.enableDamping = true;
+    this.modes.debug.orbitControls.update();
   }
 
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;
     this.instance.updateProjectionMatrix();
+
+    this.modes.default.instance.aspect = this.sizes.width / this.sizes.height;
+    this.modes.default.instance.updateProjectionMatrix();
+
+    this.modes.debug.instance.aspect = this.sizes.width / this.sizes.height;
+    this.modes.debug.instance.updateProjectionMatrix();
   }
 
   update() {
-    this.controls.update();
+    // Update debug orbit controls
+    this.modes.debug.orbitControls.update();
+
+    // Apply coordinates
+    this.instance.position.copy(this.modes[this.mode].instance.position);
+    this.instance.quaternion.copy(this.modes[this.mode].instance.quaternion);
+    this.instance.updateMatrixWorld(); // To be used in projection
+  }
+
+  destroy() {
+    this.modes.debug.orbitControls.destroy();
   }
 }
