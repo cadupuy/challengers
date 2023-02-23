@@ -11,6 +11,12 @@ export default [
   },
 
   {
+    name: "tout",
+    type: "texture",
+    path: "textures/tout.png",
+  },
+
+  {
     name: "quatre",
     type: "gltfModel",
     path: "models/quatre.glb",

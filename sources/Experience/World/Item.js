@@ -29,10 +29,7 @@ export default class Item {
 
   setModel() {
     this.model = this.resource.scene;
-    this.model.rotation.y = -Math.PI / 2;
     this.scene.add(this.model);
-
-    console.log(this.model);
 
     this.texture.flipY = false;
     const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
@@ -47,6 +44,12 @@ export default class Item {
       if (child.name === "Objet_1_Suzanne") {
         child.material = bakedMaterial;
         this.suzanne = child;
+
+        this.experience.$raycast.add(child, {
+          onClick: () => {
+            this.experience.startMotion();
+          },
+        });
       }
     });
   }
