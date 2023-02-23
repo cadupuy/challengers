@@ -1,6 +1,6 @@
 import { PlaneGeometry, ShaderMaterial, Mesh } from "three";
 import anime from "animejs";
-import Experience from "@experience/Experience";
+import Experience from "@javascript/Experience";
 
 import vertex from "@shaders/loader/vert.glsl";
 import fragment from "@shaders/loader/frag.glsl";
