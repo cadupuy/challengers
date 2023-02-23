@@ -50,6 +50,8 @@ export default class Experience {
     this.setRenderer();
     this.setWorld();
 
+    this.ui = new UI();
+
     /**
      * SCENE :
      * 1 - Écran d'accueil
@@ -73,8 +75,6 @@ export default class Experience {
     this.theaterElement = this.motionWrapperElement.querySelector('.theater');
     this.closeMotionElement = this.motionWrapperElement.querySelector('.close');
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
-
-    this.ui = new UI();
 
     this.closeMotionElement.addEventListener('click', () => {
       this.stopMotion();
