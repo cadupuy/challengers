@@ -7,6 +7,7 @@ import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
 import Resources from "@utils/Resources.js";
 import Mouse from "@utils/Mouse.js";
+import toggleFullScreen from "@utils/UI.js";
 
 import World from "@world/World.js";
 
@@ -77,7 +78,7 @@ export default class Experience {
     })
 
     this.fullscreenElement.addEventListener('click', () => {
-      this.toggleFullScreen();
+      toggleFullScreen();
     })
 
     // Resize event
@@ -183,7 +184,7 @@ export default class Experience {
     recognition.addEventListener('end', e => {
 
       if(_currrentSubtitle.includes('plein écran')) {
-        this.toggleFullScreen();
+        toggleFullScreen();
       }
 
       if(_currrentSubtitle.includes('volume')) {
@@ -202,19 +203,11 @@ export default class Experience {
     
   }
 
-  startMotion() {
-    this.motionWrapperElement.classList.add('active');
-    this.startAudio(2)
-  }
-
-  toggleFullScreen() {
-
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else if (document.exitFullscreen) {
-      document.exitFullscreen();
+  startMotion(index) {
+    if(index >= 1 && index < 4) {
+      this.motionWrapperElement.classList.add('active');
+      this.startAudio(index)
     }
-  
   }
 
   startAudio(index) { 

@@ -31,14 +31,10 @@ export default class Item {
     this.model = this.resource.scene;
     this.scene.add(this.model);
 
+    console.log(this.model);
+
     this.texture.flipY = false;
     const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
-
-    this.experience.$raycast.add(this.model, {
-      onClick: () => {
-        this.experience.startMotion();
-      },
-    });
 
     this.model.traverse((child) => {
       if (child.name === "Objet_1_Suzanne") {
@@ -47,7 +43,13 @@ export default class Item {
 
         this.experience.$raycast.add(child, {
           onClick: () => {
-            this.experience.startMotion();
+            this.experience.startMotion(1);
+          },
+        });
+      } else if(child.name === "Objet_2_Lampe") {
+        this.experience.$raycast.add(child, {
+          onClick: () => {
+            this.experience.startMotion(2);
           },
         });
       }
