@@ -24,8 +24,6 @@ export default class Environment {
 
 		if (this.debug) {
 			this.debugFolder.add(this.sunLight, "intensity").name("sunLightIntensity").min(0).max(10).step(0.001);
-
-			// add color picker to debug folder for sun light color property
 			this.debugFolder.addColor(this.sunLight, "color").name("sunLightColor");
 		}
 	}

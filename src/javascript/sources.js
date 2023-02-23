@@ -80,4 +80,26 @@ export default [
 		type: "texture",
 		path: "images/textures/roughness.png",
 	},
+
+	{
+		name: "ouvert",
+		type: "texture",
+		path: "images/textures/ouvert.png",
+	},
+
+	{
+		name: "fermer",
+		type: "texture",
+		path: "images/textures/fermer.png",
+	},
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// IMAGES
+	//////////////////////////////////////////////////////////////////////////////////////
+
+	{
+		name: "img",
+		type: "image",
+		path: "images/motion/01/illu.png",
+	},
 ];

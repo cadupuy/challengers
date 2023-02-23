@@ -24,6 +24,7 @@ export default defineConfig({
 			"@utils": path.resolve(__dirname, "./src/javascript/utils"),
 			"@world": path.resolve(__dirname, "./src/javascript/world"),
 			"@scss": path.resolve(__dirname, "./src/scss"),
+			"@json": path.resolve(__dirname, "./src/json"),
 		},
 	},
 

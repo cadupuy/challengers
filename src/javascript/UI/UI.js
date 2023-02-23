@@ -1,7 +1,7 @@
 import { Howler } from "howler";
 import toggleFullScreen from "@utils/UI.js";
 import Experience from "@javascript/Experience.js";
-import audios from "@javascript/audios.js";
+import audios from "@json/audios.json";
 
 let instance = null;
 
