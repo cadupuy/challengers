@@ -1,4 +1,4 @@
-import Experience from "@experience/Experience.js";
+import Experience from "@javascript/Experience.js";
 import { MeshStandardMaterial } from "three";
 
 export default class Locker {

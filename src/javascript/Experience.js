@@ -18,9 +18,9 @@ import World from "@world/World.js";
 import Loader from "./Loader";
 
 import UI from "@ui/UI.js";
-import Camera from "@experience/Camera.js";
-import Renderer from "@experience/Renderer.js";
-import sources from "@experience/sources.js";
+import Camera from "@javascript/Camera.js";
+import Renderer from "@javascript/Renderer.js";
+import sources from "@javascript/sources.js";
 import { raycastPlugin } from "@utils/Raycaster.js";
 
 let instance = null;

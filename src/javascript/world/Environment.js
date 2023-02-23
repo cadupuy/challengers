@@ -1,6 +1,6 @@
 import { AmbientLight } from "three";
 
-import Experience from "@experience/Experience.js";
+import Experience from "@javascript/Experience.js";
 
 export default class Environment {
 	constructor() {
