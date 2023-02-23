@@ -19,6 +19,10 @@ export default class UI {
 
     this.experience = new Experience();
 
+    this.audio;
+    this.audioVolume = 1;
+    this.audioPlaying = false;
+
     /**
      * SCENE :
      * 1 - Écran d'accueil
@@ -28,26 +32,16 @@ export default class UI {
      * 5 - Motion (peu importe lequel)
      * 6 - Écran de fin
      */
-    this.SCENE = 0;
-    this.CURRENT_MOTION;
-    this.CURRENT_AUDIO;
-    this.AUDIO_IS_PLAYING = false;
-
-    this.audio;
+    this.scene = 0;
+    this.currentMotion;
+    this.currentAudio;
     this.subtitles;
-
     this.audios = audios;
 
     this.motionWrapperElement = document.querySelector('.motion-wrapper');
     this.theaterElement = this.motionWrapperElement.querySelector('.theater');
     this.closeMotionElement = this.motionWrapperElement.querySelector('.close');
     this.subtitlesElement = document.querySelector('.subtitles-wrapper');
-
-    this.closeMotionElement.addEventListener('click', () => {
-      this.stopMotion();
-    });
-
-    this.audioVolume = 1;
     
     this.sound_elt = document.querySelector('.ui-elt.sound');
     this.fullscreenElement = document.querySelector('.ui-elt.fullscreen');
@@ -65,18 +59,22 @@ export default class UI {
     });
 
     this.fullscreenElement.addEventListener('click', () => {
-      this.toggleFullScreen();
+      toggleFullScreen();
     });
 
     this.soundElement.addEventListener('click', () => {
       this.toggleAudioVolume();
     });
 
+    this.closeMotionElement.addEventListener('click', () => {
+      this.stopMotion();
+    });
+
   }
 
   startMotion(index) {
-    if(index >= 1 && index < 4) {
-      this.CURRENT_MOTION = index;
+    if(index >= 1 && index <= 4) {
+      this.currentMotion = index;
       this.motionWrapperElement.classList.add('active');
       this.startMotionAnimation();
       this.startMotionAudio();
@@ -91,18 +89,23 @@ export default class UI {
 
   startMotionAnimation() {
     this.resetMotionsAnimations();
-    this.theaterElement.querySelector(`.motion-${this.CURRENT_MOTION}`).classList.add('active');
+    this.theaterElement.querySelector(`.motion-${this.currentMotion}`).classList.add('active');
   }
 
   stopMotion() {
     this.motionWrapperElement.classList.remove('active');
+    if(this.currentAudio == undefined) return false;
     this.stopMotionAudio();
     this.stopSubtitles();
   }
 
   startMotionAudio() { 
-    this.CURRENT_AUDIO = audios[this.CURRENT_MOTION-1];
-    if(!this.AUDIO_IS_PLAYING) {
+    this.currentAudio = audios[this.currentMotion-1];
+    if(this.currentAudio == undefined) {
+      console.error('aucun audio renseigné dans les sources');
+      return false;
+    }
+    if(!this.audioPlaying) {
       this.playMotionAudio();
       this.startSubtitles();
     }
@@ -110,21 +113,19 @@ export default class UI {
   
   playMotionAudio() {
 
-    this.AUDIO_IS_PLAYING = true;
-    this.audio = new Howl({ src: [this.CURRENT_AUDIO.path] });
+    this.audioPlaying = true;
+    this.audio = new Howl({ src: [this.currentAudio.path] });
     this.audio.play();
 
     this.audio.on('end', function() {
-      this.AUDIO_IS_PLAYING = false;
+      this.audioPlaying = false;
     });
 
   }
 
   stopMotionAudio() {
-
     this.audio.stop();
-    this.AUDIO_IS_PLAYING = false;
-
+    this.audioPlaying = false;
   }
 
   resetSubtitles() {
@@ -141,8 +142,8 @@ export default class UI {
       timecode++;
       timecodeMS = timecode / 10;
 
-      current_subtitle = this.CURRENT_AUDIO.subtitles.filter((elt, i) => {
-        return this.CURRENT_AUDIO.subtitles[i+1]?.time > timecodeMS
+      current_subtitle = this.currentAudio.subtitles.filter((elt, i) => {
+        return this.currentAudio.subtitles[i+1]?.time > timecodeMS
       })[0];
 
       if(current_subtitle != undefined)
@@ -164,7 +165,7 @@ export default class UI {
   }
 
   getSubtitlesLength() {
-    let subtitles = this.CURRENT_AUDIO.subtitles;
+    let subtitles = this.currentAudio.subtitles;
     return subtitles[subtitles.length-1].time;
   }
 

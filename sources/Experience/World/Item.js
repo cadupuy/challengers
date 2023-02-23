@@ -52,6 +52,18 @@ export default class Item {
             this.experience.ui.startMotion(2);
           },
         });
+      } else if(child.name === "Objet_3_Cone") {
+        this.experience.$raycast.add(child, {
+          onClick: () => {
+            this.experience.ui.startMotion(3);
+          },
+        });
+      } else if(child.name === "Objet_4_Ballon") {
+        this.experience.$raycast.add(child, {
+          onClick: () => {
+            this.experience.ui.startMotion(4);
+          },
+        });
       }
     });
   }
