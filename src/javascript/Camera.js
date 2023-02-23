@@ -24,34 +24,7 @@ export default class Camera {
   setInstance() {
     this.instance = new PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 150);
     this.instance.position.set(0, 0, -20);
-
     this.scene.add(this.instance);
-
-    this.debugFolder.add(this.instance.position, "x").min(-100).max(100).step(0.01);
-    this.debugFolder.add(this.instance.position, "y").min(-100).max(100).step(0.01);
-    this.debugFolder.add(this.instance.position, "z").min(-100).max(100).step(0.01);
-
-    this.debugFolder
-      .add(this.instance, "near")
-      .min(0.1)
-      .max(10)
-      .step(0.1)
-      .onChange(() => this.instance.updateProjectionMatrix())
-      .name("Camera Near");
-    this.debugFolder
-      .add(this.instance, "far")
-      .min(0.1)
-      .max(1000)
-      .step(0.1)
-      .onChange(() => this.instance.updateProjectionMatrix())
-      .name("Camera Far");
-    this.debugFolder
-      .add(this.instance, "fov")
-      .min(0.1)
-      .max(180)
-      .step(0.1)
-      .onChange(() => this.instance.updateProjectionMatrix())
-      .name("Camera FOV");
   }
 
   setModes() {
