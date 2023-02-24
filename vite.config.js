@@ -19,7 +19,7 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@javascript": path.resolve(__dirname, "./src/javascript"),
-			"@ui": path.resolve(__dirname, "./src/javascript/ui"),
+			"@ui": path.resolve(__dirname, "./src/javascript/UI"),
 			"@shaders": path.resolve(__dirname, "./src/shaders"),
 			"@utils": path.resolve(__dirname, "./src/javascript/utils"),
 			"@world": path.resolve(__dirname, "./src/javascript/world"),
