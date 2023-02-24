@@ -100,5 +100,72 @@
 				"content": "end"
 			}
 		]
+	},
+	{
+		"id": 3,
+		"name": "audio-tim-guide",
+		"path": "/sounds/extrait-tim-guide.mp3",
+		"subtitles": [
+			{
+				"time": 0,
+				"content": "C'est une relation qui se construit"
+			},
+			{
+				"time": 3,
+				"content": "au fur et à mesure qui aboutit généralement"
+			},
+			{
+				"time": 5.75,
+				"content": "sur une relation presque fraternelle,"
+			},
+			{
+				"time": 8,
+				"content": "d'autant plus que moi la complexité que j'ai"
+			},
+			{
+				"time": 11.5,
+				"content": "c'est que je bosse avec 5 voir 6 guides,"
+			},
+			{
+				"time": 13.5,
+				"content": "alors qu'en tant que déficient visuel"
+			},
+			{
+				"time": 15,
+				"content": "habituellement on en a 2."
+			},
+			{
+				"time": 16,
+				"content": "Pour pouvoir avoir la pratique la plus professionnelle possible,"
+			},
+			{
+				"time": 18,
+				"content": "on a réparti toutes les parties de la préparation"
+			},
+			{
+				"time": 24,
+				"content": "de manière à ce que je chacun puisse intervenir"
+			},
+			{
+				"time": 26,
+				"content": "et chacun, vu qu'ils sont 6, ils ont moins de charge de travail"
+			},
+			{
+				"time": 30,
+				"content": "avec moi chacun, mais du coup ils peuvent aussi s'entraîner"
+			},
+			{
+				"time": 34,
+				"content": "de manière très qualitative à côté,"
+			},
+			{
+				"time": 35,
+				"content": "et on peut avoir une solution en cas de blessure de l'un, de l'autre..."
+			},
+			{
+				"time": 41,
+				"content": "end"
+			}
+		]
 	}
 ]
