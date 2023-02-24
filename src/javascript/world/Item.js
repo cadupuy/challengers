@@ -17,30 +17,26 @@ export default class Item {
 		}
 
 		// Resource
-		this.resource = this.resources.items.quatre;
-		this.texture = this.resources.items.texture;
+		this.resource = this.resources.items.objects;
+		// this.texture = this.resources.items.texture;
 
 		this.setModel();
 	}
 
-	// NOTES :
-	//vector3.lerp
-	// lerp entre 2 positions
-
 	setModel() {
 		this.model = this.resource.scene;
+		this.model.rotation.y = Math.PI / 2;
+
 		this.scene.add(this.model);
 
-		console.log(this.model);
+		// this.texture.flipY = false;
+		// const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
 
-		this.texture.flipY = false;
-		const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
-
-		console.log(this.model);
+		console.log("ITEMS", this.model);
 
 		this.model.traverse((child) => {
 			if (child.name === "Objet_1_Suzanne") {
-				child.material = bakedMaterial;
+				//	child.material = bakedMaterial;
 
 				this.suzanne = child;
 
@@ -72,6 +68,6 @@ export default class Item {
 	}
 
 	update() {
-		this.suzanne.rotation.y += 0.01;
+		this.suzanne.rotation.x += 0.03;
 	}
 }
