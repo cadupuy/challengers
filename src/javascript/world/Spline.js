@@ -33,10 +33,11 @@ export default class Spline extends EventEmitter {
 
 	setSpline() {
 		this.curve = new CatmullRomCurve3([
-			new Vector3(-10, 2, -10),
-			new Vector3(10, 2, -10),
-			new Vector3(10, 2, 10),
-			new Vector3(-10, 2, 10),
+			new Vector3(0, 2, -40),
+			new Vector3(0, 2, -30),
+			new Vector3(0, 2, -20),
+			new Vector3(0, 2, -10),
+			new Vector3(0, 2, -2),
 		]);
 
 		const points = this.curve.getPoints(50);

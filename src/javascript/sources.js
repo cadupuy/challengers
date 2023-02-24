@@ -21,14 +21,26 @@ export default [
 	},
 
 	{
-		name: "quatre",
+		name: "oneMesh",
 		type: "gltfModel",
-		path: "models/quatre.glb",
+		path: "models/oneMesh.glb",
+	},
+
+	{
+		name: "objects",
+		type: "gltfModel",
+		path: "models/objects.glb",
 	},
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// TEXTURES
 	//////////////////////////////////////////////////////////////////////////////////////
+
+	{
+		name: "finalDiff",
+		type: "texture",
+		path: "images/textures/finalDiff.png",
+	},
 
 	{
 		name: "disp",

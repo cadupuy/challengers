@@ -18,7 +18,7 @@ export default class Environment {
 	}
 
 	setSunLight() {
-		this.sunLight = new AmbientLight("#ffffff", 2);
+		this.sunLight = new AmbientLight("#b5b5b5", 2);
 
 		this.scene.add(this.sunLight);
 

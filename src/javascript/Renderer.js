@@ -38,7 +38,7 @@ export default class Renderer {
 	}
 
 	setInstance() {
-		this.clearColor = "#010101";
+		this.clearColor = "#a3452e";
 
 		this.instance = new WebGLRenderer({
 			canvas: this.canvas,
