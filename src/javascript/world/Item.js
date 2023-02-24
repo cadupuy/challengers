@@ -41,6 +41,7 @@ export default class Item {
 		this.model.traverse((child) => {
 			if (child.name === "Objet_1_Suzanne") {
 				child.material = bakedMaterial;
+
 				this.suzanne = child;
 
 				this.experience.$raycast.add(child, {

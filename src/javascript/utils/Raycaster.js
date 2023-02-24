@@ -1,6 +1,6 @@
 import { Raycaster } from "three";
 import { w } from "./Signal";
-import { map } from "@utils/maths";
+import { map } from "@utils/math/map.js";
 
 const noop = () => {};
 
