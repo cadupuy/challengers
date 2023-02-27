@@ -1,8 +1,5 @@
 import { Raycaster } from "three";
-import { w } from "./Signal";
 import { map } from "@utils/math/map.js";
-
-const noop = () => {};
 
 function getPath(e) {
 	let path = [];
@@ -27,26 +24,26 @@ function canClick(e) {
 }
 
 const DEFAULT_CALLBACKS = () => ({
-	onEnter: noop,
-	onLeave: noop,
-	onClick: noop,
-	onHold: noop,
-	onUpdate: noop,
+	onEnter: () => {},
+	onLeave: () => {},
+	onClick: () => {},
+	onHold: () => {},
+	onUpdate: () => {},
 });
 
 const DEFAULT_STATES = () => ({
-	isActive: w(false),
-	hasClicked: w(false),
-	isHolding: w(false),
+	isActive: false,
+	hasClicked: false,
+	isHolding: false,
 });
 
-export function raycastPlugin(experience) {
+export function raycastPlugin() {
 	const list = new Map();
 	const rawList = [];
 
-	const mousePos = {
-		x: 0,
-		y: 0,
+	const mouse = {
+		pos: { x: 0, y: 0 },
+		click: false,
 	};
 
 	const raycaster = new Raycaster();
@@ -61,12 +58,9 @@ export function raycastPlugin(experience) {
 		remove: unregister,
 
 		update,
+
+		install,
 	};
-
-	experience.$raycast = api;
-	experience.$raycaster = api;
-
-	listenMouseEvents(experience.canvas);
 
 	return api;
 
@@ -78,48 +72,41 @@ export function raycastPlugin(experience) {
 
 	function onMouseDown(e) {
 		if (!canClick(e)) return;
-
-		for (let i = 0; i < rawList.length; i++) {
-			const o = list.get(rawList[i].name);
-			if (!o) continue;
-			o.states.hasClicked.set(true);
-		}
+		mouse.click = true;
 	}
 
 	function onMouseUp() {
+		mouse.click = false;
 		for (let i = 0; i < rawList.length; i++) {
 			const o = list.get(rawList[i].name);
 			if (!o) continue;
-			o.states.hasClicked.set(false);
-			o.states.isHolding.set(false);
+			o.states.hasClicked = false;
+			o.states.isHolding = false;
 		}
 	}
 
 	function onMouseMove(e) {
-		mousePos.x = map(e.clientX, 0, window.innerWidth, -1, 1);
-		mousePos.y = map(e.clientY, 0, window.innerHeight, 1, -1);
+		mouse.pos.x = map(e.clientX, 0, window.innerWidth, -1, 1);
+		mouse.pos.y = map(e.clientY, 0, window.innerHeight, 1, -1);
 	}
 
 	function createRaycastable(object, callbacks, states) {
 		const origCB = { ...callbacks };
-		const { isActive, hasClicked, isHolding } = states;
-
-		hasClicked.watch((v) => {
-			isHolding.set(v);
-			if (!v) return;
-			const ray = raycaster.intersectObject(object)[0];
-			if (!ray) return;
-			callbacks.onClick(ray.object, ray);
-		});
+		let { isActive, hasClicked, isHolding } = states;
 
 		callbacks.onEnter = (...e) => {
-			isActive.set(true);
+			states.isActive = true;
 			origCB.onEnter(...e);
 		};
 
 		callbacks.onLeave = (e) => {
-			isActive.set(false);
+			states.isActive = states.hasClicked = states.isHolding = false;
 			origCB.onLeave(e);
+		};
+
+		callbacks.onClick = (e) => {
+			states.hasClicked = states.isHolding = true;
+			origCB.onClick(e);
 		};
 
 		return Object.assign(
@@ -146,13 +133,6 @@ export function raycastPlugin(experience) {
 	function unregister(object) {
 		if (!list.has(object.name)) return DEBUG && console.warn("Object not registered");
 
-		// Unlisten to states
-		const o = list.get(object.name);
-		const { isActive, hasClicked, isHolding } = o.states;
-		isActive.unwatch();
-		hasClicked.unwatch();
-		isHolding.unwatch();
-
 		// Remove from list
 		rawList.splice(rawList.indexOf(object), 1);
 		list.delete(object.name);
@@ -165,26 +145,38 @@ export function raycastPlugin(experience) {
 	function update(camera) {
 		if (!rawList.length) return;
 
-		raycaster.setFromCamera(mousePos, camera);
+		raycaster.setFromCamera(mouse.pos, camera);
 		const intersects = raycaster.intersectObjects(rawList);
 
 		for (let i = 0; i < rawList.length; i++) {
 			const o = list.get(rawList[i].name);
-			if (!o) continue;
-			const { isActive } = o.states;
-			if (!isActive.value) continue;
+			if (!o?.states?.isActive) continue;
 			const { onLeave } = o.callbacks;
-			isActive.value && !isRaycating(o.object) && onLeave(rawList[i]);
+			o.states.isActive && !isRaycating(o.object) && onLeave(rawList[i]);
 		}
 
 		for (let i = 0; i < intersects.length; i++) {
-			const o = list.get(intersects[i].object.name);
+			const ray = intersects[i];
+			const o = list.get(ray.object.name);
 			if (!o) continue;
-			const { isActive, isHolding, hasClicked } = o.states;
-			const { onEnter, onUpdate, onHold } = o.callbacks;
-			!isActive.value && onEnter(intersects[i].object, intersects[i]);
-			isActive.value && onUpdate(intersects[i].object, intersects[i]);
-			isHolding.value && onHold(intersects[i].object, intersects[i]);
+			const { onEnter, onUpdate, onHold, onClick } = o.callbacks;
+			!o.states.isActive && onEnter(ray.object, ray);
+			!o.states.hasClicked && mouse.click && onClick(ray.object, ray);
+			o.states.isActive && onUpdate(ray.object, ray);
+			o.states.isHolding && onHold(ray.object, ray);
 		}
+	}
+
+	function install(webgl) {
+		webgl.$raycast = api;
+		webgl.$raycaster = api;
+
+		listenMouseEvents(webgl.canvas);
+
+		const { collection } = webgl;
+
+		if (!collection.raycastables) collection.raycastables = {};
+
+		delete api.install;
 	}
 }

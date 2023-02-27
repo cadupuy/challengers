@@ -32,6 +32,7 @@ export default class Experience {
 
 		// Options
 		this.canvas = _canvas;
+		this.collection = {};
 
 		if (!this.canvas) {
 			console.warn("Missing 'canvas' property");
@@ -75,7 +76,8 @@ export default class Experience {
 	}
 
 	setRaycaster() {
-		raycastPlugin(this);
+		const api = raycastPlugin();
+		api.install(this);
 	}
 
 	setDebug() {
