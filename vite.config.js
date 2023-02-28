@@ -18,11 +18,11 @@ export default defineConfig({
 
 	resolve: {
 		alias: {
-			"@javascript": path.resolve(__dirname, "./src/javascript"),
-			"@ui": path.resolve(__dirname, "./src/javascript/UI"),
+			"@js": path.resolve(__dirname, "./src/js"),
+			"@ui": path.resolve(__dirname, "./src/js/UI"),
 			"@shaders": path.resolve(__dirname, "./src/shaders"),
-			"@utils": path.resolve(__dirname, "./src/javascript/utils"),
-			"@world": path.resolve(__dirname, "./src/javascript/world"),
+			"@utils": path.resolve(__dirname, "./src/js/utils"),
+			"@world": path.resolve(__dirname, "./src/js/world"),
 			"@scss": path.resolve(__dirname, "./src/scss"),
 			"@json": path.resolve(__dirname, "./src/json"),
 		},
@@ -32,12 +32,13 @@ export default defineConfig({
 
 	assetsInclude: ["**/*.glb", "**/*.gltf"],
 
-	// ajouter le fichier de style variables.scss et le fichier functions.scss à tout le projet pour pouvoir utiliser les variables
-	// dans les fichiers scss
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: `@use "./src/scss/utils/variables.scss"; `,
+				additionalData: `@import "./src/scss/utils/variables";`,
+				sassOptions: {
+					outputStyle: "compressed",
+				},
 			},
 		},
 	},

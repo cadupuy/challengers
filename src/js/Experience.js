@@ -10,8 +10,8 @@ import { raycastPlugin } from "@utils/Raycaster.js";
 
 import World from "@world/World.js";
 
-import Camera from "@javascript/Camera.js";
-import Renderer from "@javascript/Renderer.js";
+import Camera from "@js/Camera.js";
+import Renderer from "@js/Renderer.js";
 
 import UI from "@ui/UI.js";
 
@@ -24,9 +24,6 @@ export default class Experience {
 			return Experience.instance;
 		}
 		Experience.instance = this;
-
-		// Set up
-		console.log("✨ Init app ✨");
 
 		// Global access
 		window.experience = this;

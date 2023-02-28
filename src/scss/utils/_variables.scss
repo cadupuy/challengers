@@ -1,12 +1,12 @@
 $_colors: (
 	white: #fff,
-	black: #1a1e29,
+	black: #000,
 );
 
 // 1st level z-indexes. You can get them with z(Z_INDEX_NAME)
 $_z-indexes: (
 	// Gmap + Three
-	maps: 0,
+	ui: 0,
 	streetview: 1,
 	webgl: 2,
 	// Pages

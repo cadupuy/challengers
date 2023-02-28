@@ -14,7 +14,7 @@ import {
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 
-import Experience from "@javascript/Experience.js";
+import Experience from "@js/Experience.js";
 
 export default class Renderer {
 	constructor() {

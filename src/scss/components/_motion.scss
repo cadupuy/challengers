@@ -4,11 +4,11 @@
 	position: fixed;
 	left: 0;
 	top: 0;
-	z-index: 1;
+	z-index: z-indexes(ui);
 	.ui-elt {
 		padding: 1em 2em;
-		border: 2px solid #fff;
-		color: #fff;
+		border: 2px solid colors(white);
+		color: colors(white);
 		position: absolute;
 		font-weight: 600;
 		text-transform: uppercase;
@@ -16,8 +16,8 @@
 		cursor: pointer;
 		user-select: none;
 		&:hover {
-			background-color: #fff;
-			color: #000;
+			background-color: colors(white);
+			color: colors(black);
 		}
 		&.left {
 			left: 2em;
@@ -45,7 +45,7 @@
 		left: 50%;
 		bottom: 3em;
 		transform: translateX(-50%);
-		z-index: 1;
+		z-index: z-indexes(ui);
 	}
 	.subtitles-wrapper {
 		position: absolute;
@@ -53,13 +53,13 @@
 		bottom: 3em;
 		transform: translateX(-50%);
 		text-align: center;
-		z-index: 1;
+		z-index: z-indexes(ui);
 		span {
-			background-color: #000;
+			background-color: colors(black);
 			padding: 0.25em 0.35em 0.35em;
 			display: inline-block;
 			font-size: 1.5em;
-			color: #fff;
+			color: colors(white);
 		}
 	}
 	.motion-wrapper {

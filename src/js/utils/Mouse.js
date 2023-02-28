@@ -1,5 +1,5 @@
 import { OrthographicCamera, Vector2 } from "three";
-import Experience from "@javascript/Experience.js";
+import Experience from "@js/Experience.js";
 
 const tVec2a = new Vector2();
 const tVec2b = new Vector2();

@@ -1,4 +1,4 @@
-import Experience from "@javascript/Experience.js";
+import Experience from "@js/Experience.js";
 
 import Environment from "@world/Environment.js";
 import Item from "@world/Item.js";
