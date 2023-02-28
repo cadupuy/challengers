@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-import Experience from "../Experience.js";
+import Experience from "@javascript/Experience.js";
 
 export default class Item {
 	constructor() {

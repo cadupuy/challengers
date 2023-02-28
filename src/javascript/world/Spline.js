@@ -3,7 +3,7 @@ import gsap from "gsap";
 
 import EventEmitter from "@utils/EventEmitter.js";
 
-import Experience from "../Experience.js";
+import Experience from "@javascript/Experience.js";
 
 export default class Spline extends EventEmitter {
 	constructor() {
