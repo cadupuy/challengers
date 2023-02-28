@@ -20,8 +20,10 @@ export default class Loader {
 		this.percent = document.querySelector(".loader__percent");
 
 		if (this.debug) {
-			this.debugFolder = this.debug.ui.addFolder("loader");
-			this.debugFolder.add(this.params, "active");
+			this.debugFolder = this.debug.gui.addFolder({
+				title: "loader",
+			});
+			this.debugFolder.addInput(this.params, "active");
 		}
 
 		if (this.params.active) {

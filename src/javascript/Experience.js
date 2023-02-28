@@ -1,4 +1,4 @@
-import { Scene, Mesh } from "three";
+import { Scene } from "three";
 
 import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
@@ -17,22 +17,24 @@ import sources from "@javascript/sources.js";
 
 import UI from "@ui/UI.js";
 
-let instance = null;
-
 export default class Experience {
+	static instance;
+
 	constructor(_canvas) {
 		// Singleton
-		if (instance) {
-			return instance;
+		if (Experience.instance) {
+			return Experience.instance;
 		}
-		instance = this;
+		Experience.instance = this;
+
+		// Set up
+		console.log("✨ Init app ✨");
 
 		// Global access
 		window.experience = this;
 
 		// Options
 		this.canvas = _canvas;
-		this.collection = {};
 
 		if (!this.canvas) {
 			console.warn("Missing 'canvas' property");
@@ -42,17 +44,19 @@ export default class Experience {
 		// Setup
 		this.time = new Time();
 		this.sizes = new Sizes();
-		this.setConfig();
-		this.setDebug();
-		this.setStats();
-		this.setRaycaster();
-		this.setMouse();
-		this.setScene();
-		this.setResources();
-		this.setLoader();
-		this.setCamera();
-		this.setRenderer();
-		this.setWorld();
+
+		this.#setConfig();
+		this.#setDebug();
+		this.#setStats();
+		this.#setRaycaster();
+		this.#setMouse();
+		this.#setScene();
+		this.#setResources();
+		this.#setLoader();
+		this.#setCamera();
+		this.#setRenderer();
+		this.#setWorld();
+
 		this.ui = new UI();
 
 		// Resize event
@@ -68,55 +72,55 @@ export default class Experience {
 		window.experience = this;
 	}
 
-	setConfig() {
+	#setConfig() {
 		this.config = {};
 
 		// Debug
 		this.config.debug = window.location.hash === "#debug";
 	}
 
-	setRaycaster() {
+	#setRaycaster() {
 		const api = raycastPlugin();
 		api.install(this);
 	}
 
-	setDebug() {
+	#setDebug() {
 		if (this.config.debug) {
 			this.debug = new Debug();
 		}
 	}
 
-	setStats() {
+	#setStats() {
 		if (this.config.debug) {
 			this.stats = new Stats(true);
 		}
 	}
 
-	setLoader() {
+	#setLoader() {
 		this.loader = new Loader();
 	}
 
-	setScene() {
+	#setScene() {
 		this.scene = new Scene();
 	}
 
-	setMouse() {
+	#setMouse() {
 		this.mouse = new Mouse();
 	}
 
-	setResources() {
+	#setResources() {
 		this.resources = new Resources(sources);
 	}
 
-	setCamera() {
+	#setCamera() {
 		this.camera = new Camera();
 	}
 
-	setRenderer() {
+	#setRenderer() {
 		this.renderer = new Renderer();
 	}
 
-	setWorld() {
+	#setWorld() {
 		this.world = new World();
 	}
 
@@ -140,6 +144,12 @@ export default class Experience {
 
 	destroy() {}
 }
+
+export const getWebgl = (options) => {
+	if (Experience.instance) return Experience.instance;
+
+	return new Experience(options);
+};
 
 // TODO :
 //vector3.lerp

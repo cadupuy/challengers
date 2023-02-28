@@ -51,14 +51,11 @@ export function raycastPlugin() {
 	const api = {
 		list,
 		raycaster,
-
 		register,
 		add: register,
 		unregister,
 		remove: unregister,
-
 		update,
-
 		install,
 	};
 
@@ -172,10 +169,6 @@ export function raycastPlugin() {
 		webgl.$raycaster = api;
 
 		listenMouseEvents(webgl.canvas);
-
-		const { collection } = webgl;
-
-		if (!collection.raycastables) collection.raycastables = {};
 
 		delete api.install;
 	}

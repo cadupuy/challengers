@@ -1,5 +1,5 @@
-import Experience from "@javascript/Experience.js";
 import { MeshStandardMaterial } from "three";
+import Experience from "@javascript/Experience.js";
 
 export default class Locker {
 	constructor() {
@@ -12,15 +12,17 @@ export default class Locker {
 
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.ui.addFolder("locker");
+			this.debugFolder = this.debug.gui.addFolder({
+				title: "locker",
+			});
 		}
 		this.resource = this.resources.items.oneMesh;
 		this.texture = this.resources.items.finalDiff;
 
-		this.setModel();
+		this.#setModel();
 	}
 
-	setModel() {
+	#setModel() {
 		this.model = this.resource.scene;
 
 		// turn the model half a turn to face the camera

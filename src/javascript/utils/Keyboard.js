@@ -1,26 +1,20 @@
-import EventEmitter from "./EventEmitter.js";
+import Emitter from "./EventEmitter";
 
-export default class Keyboard extends EventEmitter {
-  constructor() {
-    super();
-    document.addEventListener("keydown", this.getKeyDown);
-    document.addEventListener("keyup", this.getKeyUp);
-  }
+export default class Keyboard extends Emitter {
+	constructor() {
+		super();
 
-  getKeyDown = (e) => {
-    const key = (e.key != " " ? e.key : e.code).toUpperCase();
+		document.addEventListener("keydown", this.getKey.bind(this));
+	}
 
-    this.trigger("keydown", [key]);
-  };
+	getKey(e) {
+		const key = (e.key != " " ? e.key : e.code).toUpperCase();
 
-  getKeyUp = (e) => {
-    const key = (e.key != " " ? e.key : e.code).toUpperCase();
+		this.trigger("key", [key]);
+	}
 
-    this.trigger("keyup", [key]);
-  };
-
-  destroy() {
-    document.removeEventListener("keydown", this.getKeyDown);
-    document.removeEventListener("keyup", this.getKeyUp);
-  }
+	destroy() {
+		this.off("key");
+		document.removeEventListener("keydown", this.getKey.bind(this));
+	}
 }

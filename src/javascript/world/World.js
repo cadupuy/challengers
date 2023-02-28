@@ -1,4 +1,4 @@
-import Experience from "@javascript/Experience.js";
+import Experience from "../Experience.js";
 
 import Environment from "@world/Environment.js";
 import Item from "@world/Item.js";
@@ -6,33 +6,38 @@ import Locker from "@world/Locker.js";
 import Spline from "@world/Spline.js";
 
 export default class World {
-	constructor() {
-		this.experience = new Experience();
-		this.scene = this.experience.scene;
-		this.resources = this.experience.resources;
+	#experience;
+	#scene;
+	#resources;
 
-		this.resources.on("ready", () => {
+	constructor() {
+		this.#experience = new Experience();
+		this.#scene = this.#experience.scene;
+		this.#resources = this.#experience.resources;
+
+		this.#resources.on("ready", () => {
 			// Setup
-			this.setEnvironment();
-			this.setItem();
-			this.setLocker();
-			this.setSpline();
+			this.#setEnvironment();
+			this.#setItem();
+			this.#setLocker();
+			this.#setSpline();
 		});
 	}
 
-	setSpline() {
+	// create a setter for the spline
+	#setSpline() {
 		this.spline = new Spline();
 	}
 
-	setItem() {
+	#setItem() {
 		this.item = new Item();
 	}
 
-	setLocker() {
+	#setLocker() {
 		this.locker = new Locker();
 	}
 
-	setEnvironment() {
+	#setEnvironment() {
 		this.environment = new Environment();
 	}
 

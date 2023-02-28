@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-import Experience from "@javascript/Experience.js";
+import Experience from "../Experience.js";
 
 export default class Item {
 	constructor() {
@@ -13,7 +13,9 @@ export default class Item {
 
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.ui.addFolder("item");
+			this.debugFolder = this.debug.gui.addFolder({
+				title: "item",
+			});
 		}
 
 		// Resource

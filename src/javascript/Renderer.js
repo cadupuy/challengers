@@ -28,7 +28,9 @@ export default class Renderer {
 
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.ui.addFolder("renderer");
+			this.debugFolder = this.debug.gui.addFolder({
+				title: "renderer",
+			});
 		}
 
 		this.usePostprocess = false;
@@ -63,27 +65,30 @@ export default class Renderer {
 
 		// Debug
 		if (this.debug) {
-			console.log(this.instance.info);
+			console.log("perf monitor", this.instance.info);
 
-			this.debugFolder.addColor(this, "clearColor").onChange(() => {
+			this.debugFolder.addInput(this, "clearColor").on("change", () => {
 				this.instance.setClearColor(this.clearColor);
 			});
 
 			this.debugFolder
-				.add(this.instance, "toneMapping", {
+				.addInput(this.instance, "toneMapping", {
 					NoToneMapping: NoToneMapping,
 					LinearToneMapping: LinearToneMapping,
 					ReinhardToneMapping: ReinhardToneMapping,
 					CineonToneMapping: CineonToneMapping,
 					ACESFilmicToneMapping: ACESFilmicToneMapping,
 				})
-				.onChange(() => {
+				.on("change", () => {
 					this.scene.traverse((_child) => {
 						if (_child.isMesh) _child.material.needsUpdate = true;
 					});
 				});
 
-			this.debugFolder.add(this.instance, "toneMappingExposure").min(0).max(10);
+			this.debugFolder.addInput(this.instance, "toneMappingExposure", {
+				min: 0,
+				max: 10,
+			});
 		}
 	}
 

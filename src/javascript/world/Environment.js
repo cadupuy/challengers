@@ -11,20 +11,26 @@ export default class Environment {
 
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.ui.addFolder("environment");
+			this.debugFolder = this.debug.gui.addFolder({
+				title: "environment",
+			});
 		}
 
-		this.setSunLight();
+		this.#setSunLight();
 	}
 
-	setSunLight() {
+	#setSunLight() {
 		this.sunLight = new AmbientLight("#b5b5b5", 2);
 
 		this.scene.add(this.sunLight);
 
 		if (this.debug) {
-			this.debugFolder.add(this.sunLight, "intensity").name("sunLightIntensity").min(0).max(10).step(0.001);
-			this.debugFolder.addColor(this.sunLight, "color").name("sunLightColor");
+			this.debugFolder.addInput(this.sunLight, "intensity", {
+				min: 0,
+				max: 10,
+				step: 0.001,
+			});
+			this.debugFolder.addInput(this.sunLight, "color");
 		}
 	}
 }
