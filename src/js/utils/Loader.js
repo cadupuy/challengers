@@ -169,7 +169,6 @@ export default class Loader extends EventEmitter {
 
 		const soundsContextMP3 = import.meta.glob("../../../public/sounds/*.mp3");
 
-		console.log(soundsContextMP3);
 		for (const sound in soundsContextMP3) {
 			await soundsContextMP3[sound]().then((tex) => {
 				this.ressourcesList.push({

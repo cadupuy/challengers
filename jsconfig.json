@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"types": ["vite/client"],
+		"checkJs": true,
+		"moduleResolution": "NodeNext",
+		"target": "ES2022",
+		"module": "esnext",
+		"baseUrl": ".",
+		"paths": {
+			"@scss/*": ["./src/scss/*"],
+			"@js/*": ["./src/js/*"],
+			"@ui/*": ["./src/js/ui/*"],
+			"@utils/*": ["./src/js/utils/*"],
+			"@shaders/*": ["./src/shaders/*"],
+			"@world/*": ["./src/js/world/*"],
+			"@json/*": ["./src/json/*"]
+		}
+	},
+
+	"exclude": ["node_modules", "dist/**/*"]
+}

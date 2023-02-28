@@ -1,7 +1,4 @@
-import * as THREE from "three";
-
 import Experience from "@js/Experience.js";
-
 export default class Item {
 	constructor() {
 		this.experience = new Experience();
@@ -11,14 +8,12 @@ export default class Item {
 		this.time = this.experience.time;
 		this.debug = this.experience.debug;
 
+		this.setModel();
+
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.gui.addFolder({
-				title: "item",
-			});
+			this.setDebug();
 		}
-
-		this.setModel();
 	}
 
 	setModel() {
@@ -56,6 +51,11 @@ export default class Item {
 				});
 			}
 		});
+	}
+
+	setDebug() {
+		this.debug.setFolder("objects");
+		this.debugFolder = this.debug.getFolder("objects");
 	}
 
 	update() {

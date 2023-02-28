@@ -26,16 +26,15 @@ export default class Renderer {
 		this.debug = this.experience.debug;
 		this.stats = this.experience.stats;
 
-		// Debug
-		if (this.debug) {
-			this.debug.setFolder("renderer");
-			this.debugFolder = this.debug.getFolder("renderer");
-		}
-
 		this.usePostprocess = false;
 
 		this.setInstance();
 		this.setPostProcess();
+
+		// Debug
+		if (this.debug) {
+			this.setDebug();
+		}
 	}
 
 	setInstance() {
@@ -60,34 +59,6 @@ export default class Renderer {
 		// Add stats panel
 		if (this.stats) {
 			this.stats.setRenderPanel(this.context);
-		}
-
-		// Debug
-		if (this.debug) {
-			console.log("🚀️ Performance", this.instance.info);
-
-			this.debugFolder.addInput(this, "clearColor").on("change", () => {
-				this.instance.setClearColor(this.clearColor);
-			});
-
-			this.debugFolder
-				.addInput(this.instance, "toneMapping", {
-					NoToneMapping: NoToneMapping,
-					LinearToneMapping: LinearToneMapping,
-					ReinhardToneMapping: ReinhardToneMapping,
-					CineonToneMapping: CineonToneMapping,
-					ACESFilmicToneMapping: ACESFilmicToneMapping,
-				})
-				.on("change", () => {
-					this.scene.traverse((_child) => {
-						if (_child.isMesh) _child.material.needsUpdate = true;
-					});
-				});
-
-			this.debugFolder.addInput(this.instance, "toneMappingExposure", {
-				min: 0,
-				max: 10,
-			});
 		}
 	}
 
@@ -116,6 +87,36 @@ export default class Renderer {
 		this.postProcess.composer.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
 
 		this.postProcess.composer.addPass(this.postProcess.renderPass);
+	}
+
+	setDebug() {
+		console.log("🚀️ Performance", this.instance.info);
+
+		this.debug.setFolder("renderer");
+		this.debugFolder = this.debug.getFolder("renderer");
+
+		this.debugFolder.addInput(this, "clearColor").on("change", () => {
+			this.instance.setClearColor(this.clearColor);
+		});
+
+		this.debugFolder
+			.addInput(this.instance, "toneMapping", {
+				NoToneMapping: NoToneMapping,
+				LinearToneMapping: LinearToneMapping,
+				ReinhardToneMapping: ReinhardToneMapping,
+				CineonToneMapping: CineonToneMapping,
+				ACESFilmicToneMapping: ACESFilmicToneMapping,
+			})
+			.on("change", () => {
+				this.scene.traverse((_child) => {
+					if (_child.isMesh) _child.material.needsUpdate = true;
+				});
+			});
+
+		this.debugFolder.addInput(this.instance, "toneMappingExposure", {
+			min: 0,
+			max: 10,
+		});
 	}
 
 	resize() {

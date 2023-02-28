@@ -10,14 +10,12 @@ export default class Locker {
 		this.time = this.experience.time;
 		this.debug = this.experience.debug;
 
+		this.#setModel();
+
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.gui.addFolder({
-				title: "locker",
-			});
+			this.setDebug();
 		}
-
-		this.#setModel();
 	}
 
 	#setModel() {
@@ -36,5 +34,10 @@ export default class Locker {
 				map: this.texture,
 			});
 		});
+	}
+
+	setDebug() {
+		this.debug.setFolder("locker");
+		this.debugFolder = this.debug.getFolder("locker");
 	}
 }

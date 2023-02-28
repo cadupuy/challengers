@@ -15,8 +15,6 @@ export default class World {
 		this.#scene = this.#experience.scene;
 		this.#resources = this.#experience.resources;
 
-		console.log(this.#resources);
-
 		this.#resources.on("ressourcesReady", () => {
 			// Setup
 

@@ -10,17 +10,15 @@ export default class Camera {
 		this.canvas = this.experience.canvas;
 		this.debug = this.experience.debug;
 
-		if (this.debug) {
-			this.debugFolder = this.debug.gui.addFolder({
-				title: "camera",
-			});
-		}
-
 		// Set up
 		this.mode = "debug"; // defaultCamera \ debugCamera
 
 		this.setInstance();
 		this.setModes();
+
+		if (this.debug) {
+			this.setDebug();
+		}
 	}
 
 	setInstance() {
@@ -48,6 +46,11 @@ export default class Camera {
 		this.modes.debug.orbitControls.zoomSpeed = 0.25;
 		this.modes.debug.orbitControls.enableDamping = true;
 		this.modes.debug.orbitControls.update();
+	}
+
+	setDebug() {
+		this.debug.setFolder("camera");
+		this.debugFolder = this.debug.getFolder("camera");
 	}
 
 	resize() {
