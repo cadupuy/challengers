@@ -30,10 +30,14 @@ export default defineConfig({
 
 	plugins: [glsl()],
 
-	preprocessorOptions: {
-		scss: {
-			sassOptions: {
-				outputStyle: "compressed",
+	assetsInclude: ["**/*.glb", "**/*.gltf"],
+
+	// ajouter le fichier de style variables.scss et le fichier functions.scss à tout le projet pour pouvoir utiliser les variables
+	// dans les fichiers scss
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `@use "./src/scss/utils/variables.scss"; `,
 			},
 		},
 	},

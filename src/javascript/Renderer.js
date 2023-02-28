@@ -28,9 +28,8 @@ export default class Renderer {
 
 		// Debug
 		if (this.debug) {
-			this.debugFolder = this.debug.gui.addFolder({
-				title: "renderer",
-			});
+			this.debug.setFolder("renderer");
+			this.debugFolder = this.debug.getFolder("renderer");
 		}
 
 		this.usePostprocess = false;
@@ -65,7 +64,7 @@ export default class Renderer {
 
 		// Debug
 		if (this.debug) {
-			console.log("perf monitor", this.instance.info);
+			console.log("🚀️ Performance", this.instance.info);
 
 			this.debugFolder.addInput(this, "clearColor").on("change", () => {
 				this.instance.setClearColor(this.clearColor);

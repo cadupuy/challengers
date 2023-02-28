@@ -18,28 +18,17 @@ export default class Item {
 			});
 		}
 
-		// Resource
-		this.resource = this.resources.items.objects;
-		// this.texture = this.resources.items.texture;
-
 		this.setModel();
 	}
 
 	setModel() {
-		this.model = this.resource.scene;
+		this.model = this.resources.models.objects.scene;
 		this.model.rotation.y = Math.PI / 2;
 
 		this.scene.add(this.model);
 
-		// this.texture.flipY = false;
-		// const bakedMaterial = new THREE.MeshBasicMaterial({ map: this.texture });
-
-		console.log("ITEMS", this.model);
-
 		this.model.traverse((child) => {
 			if (child.name === "Objet_1_Suzanne") {
-				//	child.material = bakedMaterial;
-
 				this.suzanne = child;
 
 				this.experience.$raycast.add(child, {

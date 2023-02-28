@@ -16,14 +16,13 @@ export default class Locker {
 				title: "locker",
 			});
 		}
-		this.resource = this.resources.items.oneMesh;
-		this.texture = this.resources.items.finalDiff;
 
 		this.#setModel();
 	}
 
 	#setModel() {
-		this.model = this.resource.scene;
+		this.model = this.resources.models.onemesh.scene;
+		this.texture = this.resources.textures.finaldiff;
 
 		// turn the model half a turn to face the camera
 		this.model.rotation.y = Math.PI / 2;

@@ -4,16 +4,14 @@ import Debug from "@utils/Debug.js";
 import Sizes from "@utils/Sizes.js";
 import Stats from "@utils/Stats.js";
 import Time from "@utils/Time.js";
-import Resources from "@utils/Resources.js";
+import Resources from "@utils/Loader.js";
 import Mouse from "@utils/Mouse.js";
 import { raycastPlugin } from "@utils/Raycaster.js";
 
 import World from "@world/World.js";
-import Loader from "@world/Loader";
 
 import Camera from "@javascript/Camera.js";
 import Renderer from "@javascript/Renderer.js";
-import sources from "@javascript/sources.js";
 
 import UI from "@ui/UI.js";
 
@@ -45,15 +43,14 @@ export default class Experience {
 		this.time = new Time();
 		this.sizes = new Sizes();
 
+		this.#setResources();
 		this.#setConfig();
 		this.#setDebug();
 		this.#setStats();
 		this.#setRaycaster();
-		this.#setMouse();
 		this.#setScene();
-		this.#setResources();
-		this.#setLoader();
 		this.#setCamera();
+		this.#setMouse();
 		this.#setRenderer();
 		this.#setWorld();
 
@@ -96,10 +93,6 @@ export default class Experience {
 		}
 	}
 
-	#setLoader() {
-		this.loader = new Loader();
-	}
-
 	#setScene() {
 		this.scene = new Scene();
 	}
@@ -109,7 +102,7 @@ export default class Experience {
 	}
 
 	#setResources() {
-		this.resources = new Resources(sources);
+		this.resources = new Resources();
 	}
 
 	#setCamera() {
@@ -142,14 +135,10 @@ export default class Experience {
 		this.$raycast.update(this.camera.instance);
 	}
 
-	destroy() {}
+	destroy() {
+		delete Experience.instance;
+	}
 }
-
-export const getWebgl = (options) => {
-	if (Experience.instance) return Experience.instance;
-
-	return new Experience(options);
-};
 
 // TODO :
 //vector3.lerp
