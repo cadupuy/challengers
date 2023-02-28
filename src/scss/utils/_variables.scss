@@ -6,8 +6,7 @@ $_colors: (
 // 1st level z-indexes. You can get them with z(Z_INDEX_NAME)
 $_z-indexes: (
 	// Gmap + Three
-	ui: 0,
-	streetview: 1,
+	ui: 1,
 	webgl: 2,
 	// Pages
 	pages: 3,
