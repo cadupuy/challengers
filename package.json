@@ -1,25 +1,24 @@
 {
-  "name": "vite-project",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite -m development -c config/vite.config.js",
-    "build": "vite build -m production -c config/vite.config.js",
-    "staging": "vite build -m staging -c config/vite.config.js",
-    "preview": "vite preview -c config/vite.config.js"
-  },
-  "devDependencies": {
-    "vite": "^3.1.0",
-    "vite-plugin-glsl": "^0.5.3",
-    "sass": "^1.58.3"
-  },
-  "dependencies": {
-    "animejs": "^3.2.1",
-    "gsap": "^3.11.3",
-    "howler": "^2.2.3",
-    "stats.js": "^0.17.0",
-    "three": "^0.145.0",
-    "tweakpane": "^3.1.4"
-  }
+	"name": "challengers",
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite -m development",
+		"build": "vite build -m production",
+		"staging": "vite build -m staging",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"vite": "^3.1.0",
+		"vite-plugin-glsl": "^0.5.3",
+		"sass": "^1.58.3"
+	},
+	"dependencies": {
+		"animejs": "^3.2.1",
+		"gsap": "^3.11.3",
+		"howler": "^2.2.3",
+		"stats.js": "^0.17.0",
+		"three": "^0.145.0",
+		"tweakpane": "^3.1.4"
+	}
 }

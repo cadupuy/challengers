@@ -136,9 +136,3 @@ export default class Experience {
 		delete Experience.instance;
 	}
 }
-
-// TODO :
-//vector3.lerp
-// lerp entre 2 positions
-// ktx loader
-// cocher case compression blender

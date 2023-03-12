@@ -1,5 +1,5 @@
 import { Raycaster } from "three";
-import { map } from "@utils/math/map.js";
+import Maths from "@utils/Maths.js";
 
 function getPath(e) {
 	let path = [];
@@ -83,8 +83,8 @@ export function raycastPlugin() {
 	}
 
 	function onMouseMove(e) {
-		mouse.pos.x = map(e.clientX, 0, window.innerWidth, -1, 1);
-		mouse.pos.y = map(e.clientY, 0, window.innerHeight, 1, -1);
+		mouse.pos.x = Maths.map(e.clientX, 0, window.innerWidth, -1, 1);
+		mouse.pos.y = Maths.map(e.clientY, 0, window.innerHeight, 1, -1);
 	}
 
 	function createRaycastable(object, callbacks, states) {

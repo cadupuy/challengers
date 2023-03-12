@@ -22,13 +22,13 @@ export default ({ mode }) => {
 
 		resolve: {
 			alias: {
-				"@js": path.resolve(__dirname, "../src/js"),
-				"@ui": path.resolve(__dirname, "../src/js/UI"),
-				"@shaders": path.resolve(__dirname, "../src/shaders"),
-				"@utils": path.resolve(__dirname, "../src/js/utils"),
-				"@world": path.resolve(__dirname, "../src/js/world"),
-				"@scss": path.resolve(__dirname, "../src/scss"),
-				"@json": path.resolve(__dirname, "../src/json"),
+				"@js": path.resolve(__dirname, "./src/js"),
+				"@ui": path.resolve(__dirname, "./src/js/UI"),
+				"@shaders": path.resolve(__dirname, "./src/shaders"),
+				"@utils": path.resolve(__dirname, "./src/js/utils"),
+				"@world": path.resolve(__dirname, "./src/js/world"),
+				"@scss": path.resolve(__dirname, "./src/scss"),
+				"@json": path.resolve(__dirname, "./src/json"),
 			},
 		},
 
