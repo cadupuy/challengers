@@ -6,12 +6,17 @@
 		"dev": "vite -m development",
 		"build": "vite build -m production",
 		"staging": "vite build -m staging",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"lint": "eslint . --ext .js | xargs prettier --write"
 	},
 	"devDependencies": {
+		"eslint": "^8.36.0",
+		"eslint-config-prettier": "^8.7.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "^2.8.4",
+		"sass": "^1.58.3",
 		"vite": "^3.1.0",
-		"vite-plugin-glsl": "^0.5.3",
-		"sass": "^1.58.3"
+		"vite-plugin-glsl": "^0.5.3"
 	},
 	"dependencies": {
 		"animejs": "^3.2.1",

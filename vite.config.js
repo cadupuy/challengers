@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from "vite";
 import glsl from "vite-plugin-glsl";
-import path from "path";
 
 export default ({ mode }) => {
 	console.log("🏓 Environnement :", mode);
@@ -21,15 +20,39 @@ export default ({ mode }) => {
 		},
 
 		resolve: {
-			alias: {
-				"@js": path.resolve(__dirname, "./src/js"),
-				"@ui": path.resolve(__dirname, "./src/js/UI"),
-				"@shaders": path.resolve(__dirname, "./src/shaders"),
-				"@utils": path.resolve(__dirname, "./src/js/utils"),
-				"@world": path.resolve(__dirname, "./src/js/world"),
-				"@scss": path.resolve(__dirname, "./src/scss"),
-				"@json": path.resolve(__dirname, "./src/json"),
-			},
+			alias: [
+				{
+					find: "@js",
+					replacement: "/js",
+				},
+				{
+					find: "@ui",
+					replacement: "/js/UI",
+				},
+				{
+					find: "@shaders",
+					replacement: "/js/shaders",
+				},
+
+				{
+					find: "@utils",
+					replacement: "/js/utils",
+				},
+				{
+					find: "@world",
+					replacement: "/js/world",
+				},
+				{
+					find: "@scss",
+					replacement: "/scss",
+				},
+				{
+					find: "@json",
+					replacement: "/json",
+				},
+			],
+
+			extensions: [".cjs", ".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
 		},
 
 		plugins: [glsl()],
