@@ -3,13 +3,23 @@
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["eslint:recommended", "plugin:prettier/recommended"],
+	"extends": ["eslint:recommended", "prettier"],
 	"parserOptions": {
 		"sourceType": "module",
 		"ecmaVersion": "latest"
 	},
 
 	"rules": {
-		"prettier/prettier": "error"
+		"no-var": "error",
+		"prefer-const": "error",
+		"prefer-arrow-callback": "error",
+		"arrow-body-style": ["error", "as-needed"],
+		"prefer-template": "error",
+		"no-useless-concat": "error",
+		"comma-dangle": ["error", "always-multiline"],
+		"semi": ["error", "always"],
+		"no-debugger": "warn",
+		"no-unused-vars": "warn",
+		"no-empty": ["error", { "allowEmptyCatch": true }]
 	}
 }

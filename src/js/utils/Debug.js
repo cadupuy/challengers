@@ -40,7 +40,7 @@ export default class Debug {
 		});
 	}
 
-	getTab(tabLabel, folderLabel) {
+	getTab(tabLabel) {
 		const checkIndex = tabList.indexOf(tabLabel);
 		if (checkIndex == -1)
 			console.warn(`Tab '${tabLabel}' doesn't exist ❗️ \n Setting folder in tab 'General' per default`);
