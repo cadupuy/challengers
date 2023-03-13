@@ -52,7 +52,7 @@ export default ({ mode }) => {
 				},
 			],
 
-			extensions: [".cjs", ".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
+			extensions: [".cjs", ".js", ".json"],
 		},
 
 		plugins: [glsl()],
