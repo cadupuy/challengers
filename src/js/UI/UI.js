@@ -1,7 +1,7 @@
 import { Howler } from "howler";
-import toggleFullScreen from "@utils/UI.js";
-import Experience from "@js/Experience.js";
-import audios from "@json/audios.json";
+import toggleFullScreen from "@utils/UI";
+import Experience from "@js/Experience";
+import audios from "@json/audios";
 
 let instance = null;
 
@@ -78,7 +78,7 @@ export default class UI {
 	}
 
 	resetMotionsAnimations() {
-		for (let motion of this.motionWrapperElement.querySelectorAll(".motion")) {
+		for (const motion of this.motionWrapperElement.querySelectorAll(".motion")) {
 			motion.classList.remove("active");
 		}
 	}
@@ -127,7 +127,7 @@ export default class UI {
 	}
 
 	startSubtitles() {
-		let subtitlesLength = this.getSubtitlesLength();
+		const subtitlesLength = this.getSubtitlesLength();
 		let timecode = 0,
 			timecodeMS = 0,
 			current_subtitle;
@@ -157,7 +157,7 @@ export default class UI {
 	}
 
 	getSubtitlesLength() {
-		let subtitles = this.currentAudio.subtitles;
+		const subtitles = this.currentAudio.subtitles;
 		return subtitles[subtitles.length - 1].time;
 	}
 

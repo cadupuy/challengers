@@ -1,4 +1,4 @@
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 export default class Item {
 	constructor() {
 		this.experience = new Experience();

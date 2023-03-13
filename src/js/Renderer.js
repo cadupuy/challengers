@@ -11,10 +11,10 @@ import {
 	LinearFilter,
 } from "three";
 
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 
 export default class Renderer {
 	constructor() {

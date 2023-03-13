@@ -1,5 +1,5 @@
 import { OrthographicCamera, Vector2 } from "three";
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 
 const tVec2a = new Vector2();
 const tVec2b = new Vector2();
@@ -56,9 +56,9 @@ export default class Mouse {
 			return { width, height, vFov };
 		}
 
-		let cameraZ = this.camera.instance.position.z;
-		let distance = cameraZ - objectPos; // Calcul the z distance between the camera and a random object ('could be a plane, a cube or whatever you want)
-		let aspect = this.camera.aspect;
+		const cameraZ = this.camera.instance.position.z;
+		const distance = cameraZ - objectPos; // Calcul the z distance between the camera and a random object ('could be a plane, a cube or whatever you want)
+		const aspect = this.camera.aspect;
 
 		let vFov = (this.camera.fov * Math.PI) / 180;
 		let height = 2 * Math.tan(vFov / 2) * distance;

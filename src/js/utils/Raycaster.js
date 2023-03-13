@@ -1,8 +1,8 @@
 import { Raycaster } from "three";
-import Maths from "@utils/Maths.js";
+import Maths from "@utils/Maths";
 
 function getPath(e) {
-	let path = [];
+	const path = [];
 	let currentElem = e.target;
 	while (currentElem) {
 		path.push(currentElem);
@@ -89,7 +89,7 @@ export function raycastPlugin() {
 
 	function createRaycastable(object, callbacks, states) {
 		const origCB = { ...callbacks };
-		let { isActive, hasClicked, isHolding } = states;
+		const { isActive, hasClicked, isHolding } = states;
 
 		callbacks.onEnter = (...e) => {
 			states.isActive = true;

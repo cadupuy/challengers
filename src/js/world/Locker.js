@@ -1,5 +1,5 @@
 import { MeshStandardMaterial } from "three";
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 
 export default class Locker {
 	constructor() {

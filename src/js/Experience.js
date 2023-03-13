@@ -1,19 +1,19 @@
 import { Scene } from "three";
 
-import Debug from "@utils/Debug.js";
-import Sizes from "@utils/Sizes.js";
-import Stats from "@utils/Stats.js";
-import Time from "@utils/Time.js";
-import Resources from "@utils/Loader.js";
-import Mouse from "@utils/Mouse.js";
-import { raycastPlugin } from "@utils/Raycaster.js";
+import Debug from "@utils/Debug";
+import Sizes from "@utils/Sizes";
+import Stats from "@utils/Stats";
+import Time from "@utils/Time";
+import Resources from "@utils/Loader";
+import Mouse from "@utils/Mouse";
+import { raycastPlugin } from "@utils/Raycaster";
 
-import World from "@world/World.js";
+import World from "@world/World";
 
-import Camera from "@js/Camera.js";
-import Renderer from "@js/Renderer.js";
+import Camera from "@js/Camera";
+import Renderer from "@js/Renderer";
 
-import UI from "@ui/UI.js";
+import UI from "@ui/UI";
 
 export default class Experience {
 	static instance;

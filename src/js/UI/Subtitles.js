@@ -1,11 +1,7 @@
-import UI from "@ui/UI.js";
+import UI from "@ui/UI";
 
 export default class Subtitles {
-
-  constructor() {
-    
-    this.UI = new UI();
-
-  }
-
+	constructor() {
+		this.UI = new UI();
+	}
 }

@@ -1,9 +1,9 @@
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 
-import Environment from "@world/Environment.js";
-import Item from "@world/Item.js";
-import Locker from "@world/Locker.js";
-import Spline from "@world/Spline.js";
+import Environment from "@world/Environment";
+import Item from "@world/Item";
+import Locker from "@world/Locker";
+import Spline from "@world/Spline";
 
 export default class World {
 	#experience;

@@ -1,9 +1,9 @@
 import { BufferGeometry, LineBasicMaterial, Line, CatmullRomCurve3, Vector3 } from "three";
 import gsap from "gsap";
 
-import EventEmitter from "@utils/EventEmitter.js";
+import EventEmitter from "@utils/EventEmitter";
 
-import Experience from "@js/Experience.js";
+import Experience from "@js/Experience";
 
 export default class Spline extends EventEmitter {
 	constructor() {
