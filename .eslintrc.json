@@ -46,7 +46,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["commitlint.config.cjs"],
+			"files": ["commitlint.config.js"],
 			"env": {
 				"node": true
 			}

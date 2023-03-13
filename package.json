@@ -1,7 +1,6 @@
 {
 	"name": "challengers",
 	"version": "0.0.0",
-	"type": "module",
 	"scripts": {
 		"dev": "vite -m development",
 		"build": "vite build -m production",
