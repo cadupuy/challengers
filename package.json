@@ -1,21 +1,24 @@
 {
 	"name": "challengers",
 	"version": "0.0.0",
-	"type": "module",
 	"scripts": {
 		"dev": "vite -m development",
 		"build": "vite build -m production",
 		"staging": "vite build -m staging",
 		"preview": "vite preview",
-		"lint": "eslint . --ext .js | xargs prettier --write"
+		"lint": "eslint . --ext .js | xargs prettier --write",
+		"prepare": "husky install"
 	},
 	"devDependencies": {
+		"commitlint": "^17.4.4",
+		"commitlint-config-gitmoji": "^2.3.1",
 		"eslint": "^8.36.0",
 		"eslint-config-prettier": "^8.7.0",
 		"prettier": "^2.8.4",
 		"sass": "^1.58.3",
 		"vite": "^3.1.0",
-		"vite-plugin-glsl": "^0.5.3"
+		"vite-plugin-glsl": "^0.5.3",
+		"husky": "^8.0.0"
 	},
 	"dependencies": {
 		"animejs": "^3.2.1",

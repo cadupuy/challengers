@@ -43,5 +43,13 @@
 		"space-infix-ops": "error",
 		"space-unary-ops": ["error", { "words": true, "nonwords": false }],
 		"switch-colon-spacing": "error"
-	}
+	},
+	"overrides": [
+		{
+			"files": ["commitlint.config.js"],
+			"env": {
+				"node": true
+			}
+		}
+	]
 }
