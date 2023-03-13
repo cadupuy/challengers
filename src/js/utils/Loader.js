@@ -234,7 +234,7 @@ export default class Loader extends EventEmitter {
 		}
 	}
 	createNestedObject(base, names, value) {
-		let lastName = arguments.length === 3 ? names.pop() : false;
+		const lastName = arguments.length === 3 ? names.pop() : false;
 		for (let i = 0; i < names.length; i++) {
 			base = base[names[i]] = base[names[i]] || {};
 		}

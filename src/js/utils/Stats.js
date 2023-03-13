@@ -61,6 +61,7 @@ export default class Stats {
 				const panelValue = Math.min(elapsedNanos / 1000 / 1000, this.max);
 
 				if (panelValue === this.max && this.ignoreMaxed) {
+					// Ignore
 				} else {
 					this.render.panel.update(panelValue, this.max);
 				}

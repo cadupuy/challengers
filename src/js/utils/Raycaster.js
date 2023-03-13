@@ -61,7 +61,7 @@ export function raycastPlugin() {
 
 	return api;
 
-	function listenMouseEvents(canvas) {
+	function listenMouseEvents() {
 		window.addEventListener("mousedown", onMouseDown, { passive: false });
 		window.addEventListener("mouseup", onMouseUp, { passive: false });
 		window.addEventListener("mousemove", onMouseMove, { passive: false });
@@ -89,7 +89,6 @@ export function raycastPlugin() {
 
 	function createRaycastable(object, callbacks, states) {
 		const origCB = { ...callbacks };
-		const { isActive, hasClicked, isHolding } = states;
 
 		callbacks.onEnter = (...e) => {
 			states.isActive = true;
@@ -128,7 +127,7 @@ export function raycastPlugin() {
 	}
 
 	function unregister(object) {
-		if (!list.has(object.name)) return DEBUG && console.warn("Object not registered");
+		if (!list.has(object.name)) return console.warn("Object not registered");
 
 		// Remove from list
 		rawList.splice(rawList.indexOf(object), 1);

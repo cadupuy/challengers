@@ -7,7 +7,7 @@ const tVec2c = new Vector2();
 const tVec2d = new Vector2();
 
 export default class Mouse {
-	constructor(opt = {}) {
+	constructor() {
 		this.experience = new Experience();
 		this.scene = this.experience.scene;
 		this.sizes = this.experience.sizes;

@@ -57,7 +57,7 @@ export default class Spline extends EventEmitter {
 		this.scroll.target += deltaY * this.intensity;
 	}
 
-	update(percent) {
+	update() {
 		this.scroll.target = gsap.utils.clamp(0, this.scroll.limit, this.scroll.target);
 		this.scroll.current = gsap.utils.interpolate(this.scroll.current, this.scroll.target, 0.03);
 
